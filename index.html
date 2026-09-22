@@ -602,6 +602,19 @@
         color: var(--muted);
         font-size: 0.85rem;
       }
+      .organizerSummary {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin: 12px 0;
+      }
+      .organizerSummary div {
+        padding: 10px;
+        border-radius: 12px;
+        background: #181822;
+      }
+      .organizerSummary small { display: block; color: var(--muted); }
+      .organizerSummary b { font-size: .9rem; }
       .organizerActions {
         display: flex;
         gap: 8px;
@@ -642,6 +655,15 @@
         font-size: 0.75rem;
         color: var(--muted);
       }
+      .galleryMeta { display: flex; align-items: center; gap: 8px; padding: 9px; }
+      .galleryMeta span { flex: 1; padding: 0; overflow-wrap: anywhere; }
+      .galleryMeta .btn { padding: 7px 9px; }
+      .formField { display: grid; gap: 6px; margin: 13px 0; font-weight: 800; }
+      .formField input, .formField textarea, .formField select {
+        width: 100%; padding: 11px; color: var(--text); background: #171721;
+        border: 1px solid var(--line); border-radius: 11px; font: inherit;
+      }
+      .formField textarea { min-height: 92px; resize: vertical; }
       .eventList {
         display: grid;
         gap: 12px;
@@ -1150,10 +1172,14 @@
             <div class="eyebrow">Pannello organizzatore</div>
             <span id="eventStatus" class="statusPill">BOZZA</span
             ><strong id="organizerCode">--------</strong>
-            <p>
+            <p id="organizerHint">
               Questo codice sarà utilizzabile dai partecipanti dopo
               l'attivazione.
             </p>
+            <div class="organizerSummary">
+              <div><small>Accesso</small><b id="purchaseLabel">Da attivare</b></div>
+              <div><small>Prossimo passo</small><b id="nextStatusLabel">Completa il pagamento</b></div>
+            </div>
             <div class="organizerActions">
               <button id="showQrBtn" class="btn primary">Mostra QR</button
               ><button id="shareInviteBtn" class="btn">Condividi invito</button
@@ -1227,6 +1253,21 @@
           <button id="closeInviteBtn" class="btn">Chiudi</button>
         </div>
       </div>
+    </dialog>
+    <dialog id="missionDialog" class="inviteDialog" aria-labelledby="missionDialogTitle">
+      <form id="missionForm" class="inviteDialogInner">
+        <div class="eyebrow">Gestione missione</div>
+        <h2 id="missionDialogTitle">Modifica missione</h2>
+        <input id="missionId" type="hidden">
+        <label class="formField">Titolo<input id="missionTitle" maxlength="120" required></label>
+        <label class="formField">Descrizione<textarea id="missionDescription" maxlength="500" required></textarea></label>
+        <label class="formField">Punti<input id="missionPoints" type="number" min="1" max="50" required></label>
+        <label class="formField">Visibilità<select id="missionStatus"><option value="active">Attiva</option><option value="inactive">Disattivata</option></select></label>
+        <div class="organizerActions">
+          <button id="saveMissionBtn" class="btn primary" type="submit">Salva modifiche</button>
+          <button id="closeMissionBtn" class="btn" type="button">Annulla</button>
+        </div>
+      </form>
     </dialog>
     <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"></script>
@@ -1305,7 +1346,9 @@
         currentRealtimeChannel = null,
         proofCounts = new Map(),
         currentIsAdmin = false,
+        currentUserId = null,
         currentEventStatus = "DRAFT",
+        currentPurchaseStatus = "pending",
         currentMedia = [],
         alcoholCount = 0,
         targetScore = 100,
@@ -1489,7 +1532,7 @@
           db
             .from("mission_media")
             .select(
-              "id,mission_id,media_type,storage_path,file_name,created_at",
+              "id,mission_id,media_type,storage_path,file_name,created_at,uploaded_by",
             )
             .eq("event_id", eventId)
             .order("created_at", { ascending: false }),
@@ -1507,7 +1550,9 @@
         ]);
         if (eventResult.error) throw eventResult.error;
         currentEventId = eventId;
+        currentUserId = user?.id || null;
         currentEventStatus = eventResult.data.status;
+        currentPurchaseStatus = eventResult.data.purchase_status;
         currentIsAdmin = participantResult.data?.role === "admin";
         currentMedia = mediaResult.data || [];
         alcoholCount = counterResult.data?.alcohol_count || 0;
@@ -1518,7 +1563,7 @@
           eventResult.data.name;
         document.getElementById("gameType").textContent =
           `${eventResult.data.event_type.replaceAll("_", " ").toUpperCase()}${currentChallengeMode === "insane" ? " · MODALITÀ FOLLE" : ""}`;
-        document.getElementById("eventStatus").textContent = currentEventStatus;
+        updateOrganizerUi();
         document.getElementById("organizerCode").textContent =
           eventResult.data.join_code;
         document
@@ -1577,7 +1622,7 @@
           db
             .from("mission_media")
             .select(
-              "id,mission_id,media_type,storage_path,file_name,created_at",
+              "id,mission_id,media_type,storage_path,file_name,created_at,uploaded_by",
             )
             .eq("event_id", currentEventId)
             .order("created_at", { ascending: false }),
@@ -1833,6 +1878,28 @@
       document.getElementById("inviteDialog").addEventListener("click", (event) => {
         if (event.target === event.currentTarget) event.currentTarget.close();
       });
+      function updateOrganizerUi() {
+        const statusLabels = {
+          DRAFT: "Bozza", READY: "Pronto", ACTIVE: "In corso",
+          COMPLETED: "Concluso", MEMORY: "Ricordi",
+        };
+        const nextLabels = {
+          DRAFT: currentPurchaseStatus === "paid" ? "Rendi pronto" : "Completa il pagamento",
+          READY: "Avvia l’evento", ACTIVE: "Concludi l’evento",
+          COMPLETED: "Archivia nei ricordi", MEMORY: "Nessuna azione",
+        };
+        document.getElementById("eventStatus").textContent = statusLabels[currentEventStatus] || currentEventStatus;
+        document.getElementById("purchaseLabel").textContent = currentPurchaseStatus === "paid" ? "Attivato" : "Da attivare";
+        document.getElementById("nextStatusLabel").textContent = nextLabels[currentEventStatus] || "—";
+        const advance = document.getElementById("advanceStatusBtn");
+        advance.textContent = nextLabels[currentEventStatus] || "Gestisci stato";
+        advance.disabled = currentEventStatus === "MEMORY" || (currentEventStatus === "DRAFT" && currentPurchaseStatus !== "paid");
+        document.getElementById("organizerHint").textContent =
+          currentEventStatus === "DRAFT" ? "Configura le missioni e attiva l’evento quando è pronto." :
+          currentEventStatus === "ACTIVE" ? "La squadra può completare missioni e caricare ricordi." :
+          ["COMPLETED", "MEMORY"].includes(currentEventStatus) ? "L’evento è concluso: consulta il finale e i ricordi." :
+          "Condividi il codice o il QR, poi avvia l’evento.";
+      }
       document
         .getElementById("advanceStatusBtn")
         .addEventListener("click", async () => {
@@ -1867,7 +1934,7 @@
             return;
           }
           currentEventStatus = data;
-          document.getElementById("eventStatus").textContent = data;
+          updateOrganizerUi();
           document
             .getElementById("finaleBtn")
             .classList.toggle(
@@ -1953,6 +2020,11 @@
       async function uploadProof(missionId, input) {
         const file = input.files?.[0];
         if (!file || !currentEventId) return;
+        if (!navigator.onLine) {
+          toast("Sei offline: riconnettiti e riprova");
+          input.value = "";
+          return;
+        }
         if (file.size > 52428800) {
           toast("Il file supera 50 MB");
           input.value = "";
@@ -1971,6 +2043,9 @@
           return;
         }
         input.disabled = true;
+        const label = input.closest("label");
+        const previousLabel = label?.childNodes?.[0]?.textContent;
+        if (label?.childNodes?.[0]) label.childNodes[0].textContent = "⏳ Caricamento… ";
         try {
           const {
             data: { user },
@@ -2004,34 +2079,63 @@
           await refreshRemoteProgress();
         } catch (err) {
           console.error(err);
-          toast("Caricamento non riuscito");
+          const message = String(err?.message || "").toLowerCase();
+          toast(
+            message.includes("row-level security") || message.includes("policy")
+              ? "Non hai i permessi per caricare questa prova"
+              : message.includes("payload") || message.includes("size")
+                ? "File troppo grande per il caricamento"
+                : "Caricamento interrotto: controlla la connessione e riprova",
+          );
         } finally {
           input.disabled = false;
           input.value = "";
+          if (label?.childNodes?.[0] && previousLabel) label.childNodes[0].textContent = previousLabel;
         }
       }
-      async function editMission(id) {
+      function editMission(id) {
         const q = demoQuests.find((x) => x.id === id);
         if (!q || !currentIsAdmin) return;
-        const title = prompt("Titolo missione", q.title);
-        if (title === null) return;
-        const desc = prompt("Descrizione", q.desc);
-        if (desc === null) return;
-        const points = Number(prompt("Punti (1–50)", String(q.pts)));
-        if (!Number.isInteger(points) || points < 1 || points > 50) {
-          toast("Punteggio non valido");
+        if (["COMPLETED", "MEMORY"].includes(currentEventStatus)) {
+          toast("Le missioni di un evento concluso non sono modificabili");
           return;
         }
-        const active = confirm(
-          "Premi OK per lasciare la missione attiva. Annulla per disattivarla.",
-        );
+        document.getElementById("missionId").value = id;
+        document.getElementById("missionTitle").value = q.title;
+        document.getElementById("missionDescription").value = q.desc;
+        document.getElementById("missionPoints").value = q.pts;
+        document.getElementById("missionStatus").value = q.status || "active";
+        document.getElementById("missionDialog").showModal();
+      }
+      document.getElementById("closeMissionBtn").addEventListener("click", () =>
+        document.getElementById("missionDialog").close(),
+      );
+      document.getElementById("missionDialog").addEventListener("click", (event) => {
+        if (event.target === event.currentTarget) event.currentTarget.close();
+      });
+      document.getElementById("missionForm").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const id = document.getElementById("missionId").value;
+        const q = demoQuests.find((x) => x.id === id);
+        if (!q || !currentIsAdmin) return;
+        const title = document.getElementById("missionTitle").value.trim();
+        const desc = document.getElementById("missionDescription").value.trim();
+        const points = Number(document.getElementById("missionPoints").value);
+        const status = document.getElementById("missionStatus").value;
+        if (!title || !desc || !Number.isInteger(points) || points < 1 || points > 50) {
+          toast("Controlla titolo, descrizione e punti (1–50)");
+          return;
+        }
+        const saveButton = document.getElementById("saveMissionBtn");
+        saveButton.disabled = true;
         const { error } = await db.rpc("update_event_mission", {
           target_mission: id,
           new_title: title,
           new_description: desc,
           new_points: points,
-          new_status: active ? "active" : "inactive",
+          new_status: status,
         });
+        saveButton.disabled = false;
         if (error) {
           toast("Modifica non riuscita");
           return;
@@ -2039,9 +2143,33 @@
         q.title = title.trim();
         q.desc = desc.trim();
         q.pts = points;
-        q.status = active ? "active" : "inactive";
+        q.status = status;
+        document.getElementById("missionDialog").close();
         renderQuests();
         toast("Missione aggiornata");
+      });
+      async function deleteMedia(id, storagePath) {
+        const item = currentMedia.find((x) => x.id === id && x.storage_path === storagePath);
+        if (!item || (!currentIsAdmin && item.uploaded_by !== currentUserId)) {
+          toast("Non hai i permessi per eliminare questo ricordo");
+          return;
+        }
+        if (!confirm("Eliminare definitivamente questo ricordo?")) return;
+        const storageResult = await db.storage.from("mission-proofs").remove([storagePath]);
+        if (storageResult.error) {
+          toast("Eliminazione non riuscita: riprova");
+          return;
+        }
+        const rowResult = await db.from("mission_media").delete().eq("id", id);
+        if (rowResult.error) {
+          toast("File eliminato; aggiorno la galleria");
+          await refreshRemoteProgress();
+          return;
+        }
+        currentMedia = currentMedia.filter((x) => x.id !== id);
+        proofCounts.set(item.mission_id, Math.max(0, (proofCounts.get(item.mission_id) || 1) - 1));
+        await renderGallery();
+        toast("Ricordo eliminato");
       }
       async function renderGallery() {
         document.getElementById("questList").classList.add("hidden");
@@ -2054,23 +2182,26 @@
         }
         gallery.innerHTML =
           '<div class="panel" style="grid-column:1/-1">Carico i ricordi…</div>';
-        const signed = await Promise.all(
+        const results = await Promise.allSettled(
           currentMedia.map(async (item) => {
             const result = await db.storage
               .from("mission-proofs")
               .createSignedUrl(item.storage_path, 900);
+            if (result.error || !result.data?.signedUrl) throw result.error || new Error("URL non disponibile");
             return { ...item, url: result.data?.signedUrl };
           }),
         );
+        const signed = results.filter((x) => x.status === "fulfilled").map((x) => x.value);
+        const failures = results.length - signed.length;
         gallery.innerHTML =
           signed
-            .filter((x) => x.url)
             .map(
               (item) =>
-                `<article class="galleryItem">${item.media_type === "video" ? `<video src="${safe(item.url)}" controls preload="metadata"></video>` : `<img src="${safe(item.url)}" alt="Prova della missione" loading="lazy">`}<span>${safe(item.file_name)}</span></article>`,
+                `<article class="galleryItem">${item.media_type === "video" ? `<video src="${safe(item.url)}" controls preload="metadata"></video>` : `<img src="${safe(item.url)}" alt="Prova della missione" loading="lazy">`}<div class="galleryMeta"><span>${safe(item.file_name)}</span>${currentIsAdmin || item.uploaded_by === currentUserId ? `<button class="btn" type="button" aria-label="Elimina ${safe(item.file_name)}" onclick='deleteMedia(${JSON.stringify(item.id)},${JSON.stringify(item.storage_path)})'>Elimina</button>` : ""}</div></article>`,
             )
-            .join("") ||
-          '<div class="panel" style="grid-column:1/-1">Non riesco a caricare i ricordi.</div>';
+            .join("") +
+          (failures ? `<div class="panel" style="grid-column:1/-1">${failures} ${failures === 1 ? "ricordo non è disponibile" : "ricordi non sono disponibili"}. <button class="btn" onclick="renderGallery()">Riprova</button></div>` : "") ||
+          '<div class="panel" style="grid-column:1/-1">Non riesco a caricare i ricordi. <button class="btn" onclick="renderGallery()">Riprova</button></div>';
       }
       function renderQuests() {
         const list = demoQuests.filter(

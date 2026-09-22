@@ -29,6 +29,10 @@ new vm.Script(serviceWorker,{filename:'sw.js'});
 for(const token of ['reopenEventAfterCheckout','purchase_status','serviceWorker.register']){
   if(!html.includes(token)) throw new Error(`Missing checkout/PWA behavior: ${token}`);
 }
+for(const token of ['id="missionDialog"','updateOrganizerUi','deleteMedia','Promise.allSettled','uploaded_by']){
+  if(!html.includes(token)) throw new Error(`Missing organizer/gallery behavior: ${token}`);
+}
+if(/prompt\("Titolo missione"/.test(html)) throw new Error('Legacy prompt mission editor is still present');
 for(const token of ['/auth/v1/user','event.owner_user_id !== user.id','{CHECKOUT_SESSION_ID}']){
   if(!checkout.includes(token)) throw new Error(`Missing checkout security: ${token}`);
 }
