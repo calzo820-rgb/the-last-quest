@@ -18,6 +18,7 @@ MVP commerciale separato dal prototipo Pasaporte del Novio e da Slotta.
 - Prove fotografiche e video in bucket privato
 - Accesso ai media limitato ai membri dello stesso evento
 - Modifica e disattivazione missioni riservata all'organizzatore
+- Invito partecipanti tramite QR, link, codice e condivisione nativa mobile
 - Stati evento protetti: bozza, pronto, attivo, concluso e ricordo
 - Galleria privata con URL temporanei firmati
 
@@ -37,4 +38,4 @@ Impostare le variabili elencate in `.env.example`. Il webhook Stripe deve puntar
 
 ## Prossima milestone
 
-Pannello organizzatore, modifica missioni e condivisione QR.
+Configurazione Stripe di produzione, test end-to-end del pagamento e rifinitura onboarding.
