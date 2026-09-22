@@ -8,39 +8,67 @@ module.exports = async function handler(req, res) {
     return res.status(503).json({ error: 'Pagamenti non ancora configurati' });
   }
 
-  const { eventId } = req.body || {};
-  const authHeader = req.headers.authorization || '';
-  if (!uuidPattern.test(eventId || '') || !authHeader.startsWith('Bearer ')) {
-    return res.status(400).json({ error: 'Richiesta non valida' });
+  try {
+    const { eventId } = req.body || {};
+    const authHeader = req.headers.authorization || '';
+    if (!uuidPattern.test(eventId || '') || !authHeader.startsWith('Bearer ')) {
+      return res.status(400).json({ error: 'Richiesta non valida' });
+    }
+
+    const eventResponse = await fetch(
+      `${process.env.SUPABASE_URL}/rest/v1/events?id=eq.${encodeURIComponent(eventId)}&select=id,name,purchase_status,owner_user_id`,
+      { headers: { apikey: process.env.SUPABASE_PUBLISHABLE_KEY, Authorization: authHeader } }
+    );
+    if (!eventResponse.ok) {
+      console.error('Supabase event lookup failed', eventResponse.status);
+      return res.status(502).json({ error: 'Verifica evento non riuscita' });
+    }
+
+    const events = await eventResponse.json();
+    const event = events[0];
+    if (!event) return res.status(403).json({ error: 'Evento non disponibile' });
+    if (event.purchase_status === 'paid') {
+      return res.status(409).json({ error: 'Evento già pagato' });
+    }
+
+    const origin = process.env.APP_URL || `https://${req.headers.host}`;
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2026-02-25.clover' });
+    const session = await stripe.checkout.sessions.create({
+      mode: 'payment',
+      payment_method_types: ['card'],
+      client_reference_id: event.id,
+      line_items: [{
+        quantity: 1,
+        price_data: {
+          currency: 'eur',
+          unit_amount: 1999,
+          product_data: {
+            name: 'The Last Quest — Evento completo',
+            description: event.name
+          }
+        }
+      }],
+      metadata: {
+        event_id: event.id,
+        event_name: String(event.name || '').slice(0, 500),
+        owner_user_id: event.owner_user_id,
+        product: 'single_event'
+      },
+      payment_intent_data: {
+        metadata: {
+          event_id: event.id,
+          owner_user_id: event.owner_user_id,
+          product: 'single_event'
+        }
+      },
+      success_url: `${origin}/?payment=success&event=${event.id}&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/?payment=cancelled&event=${event.id}`,
+      allow_promotion_codes: false
+    });
+
+    return res.status(200).json({ url: session.url, sessionId: session.id });
+  } catch (error) {
+    console.error('Stripe checkout creation failed', error);
+    return res.status(500).json({ error: 'Impossibile avviare il pagamento' });
   }
-
-  const eventResponse = await fetch(
-    `${process.env.SUPABASE_URL}/rest/v1/events?id=eq.${encodeURIComponent(eventId)}&select=id,name,purchase_status`,
-    { headers: { apikey: process.env.SUPABASE_PUBLISHABLE_KEY, Authorization: authHeader } }
-  );
-  const events = eventResponse.ok ? await eventResponse.json() : [];
-  const event = events[0];
-  if (!event) return res.status(403).json({ error: 'Evento non disponibile' });
-  if (event.purchase_status === 'paid') return res.status(409).json({ error: 'Evento già pagato' });
-
-  const origin = process.env.APP_URL || `https://${req.headers.host}`;
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2026-02-25.clover' });
-  const session = await stripe.checkout.sessions.create({
-    mode: 'payment',
-    payment_method_types: ['card'],
-    line_items: [{
-      quantity: 1,
-      price_data: {
-        currency: 'eur',
-        unit_amount: 1999,
-        product_data: { name: 'The Last Quest — Evento completo', description: event.name }
-      }
-    }],
-    metadata: { event_id: event.id },
-    success_url: `${origin}/?payment=success&event=${event.id}`,
-    cancel_url: `${origin}/?payment=cancelled&event=${event.id}`,
-    allow_promotion_codes: false
-  });
-
-  return res.status(200).json({ url: session.url });
 };
