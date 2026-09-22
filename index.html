@@ -2102,10 +2102,62 @@
           `${Math.min(100, (score / targetScore) * 100)}%`;
       }
       const params = new URLSearchParams(location.search);
-      if (params.get("payment") === "success")
-        toast("Pagamento confermato: evento attivato");
-      if (params.get("payment") === "cancelled")
-        toast("Pagamento annullato: la bozza è ancora disponibile");
+      const paymentState = params.get("payment");
+      const returnedEventId = params.get("event");
+      const uuidPattern =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+      const checkoutDelay = (ms) =>
+        new Promise((resolve) => setTimeout(resolve, ms));
+
+      function clearCheckoutParams() {
+        const cleanUrl = new URL(location.href);
+        ["payment", "event", "session_id"].forEach((key) =>
+          cleanUrl.searchParams.delete(key),
+        );
+        history.replaceState({}, "", cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
+      }
+
+      async function reopenEventAfterCheckout(eventId, waitForWebhook) {
+        if (!uuidPattern.test(eventId || "")) {
+          toast("Ritorno dal pagamento non valido");
+          clearCheckoutParams();
+          return;
+        }
+        try {
+          await ensureAnonymousSession();
+          if (waitForWebhook) {
+            toast("Pagamento ricevuto. Attendo l’attivazione…");
+            for (let attempt = 0; attempt < 12; attempt += 1) {
+              const { data, error } = await db
+                .from("events")
+                .select("purchase_status")
+                .eq("id", eventId)
+                .single();
+              if (error) throw error;
+              if (data.purchase_status === "paid") {
+                await loadRemoteEvent(eventId);
+                showView("game");
+                clearCheckoutParams();
+                toast("Pagamento confermato: evento attivato");
+                return;
+              }
+              await checkoutDelay(Math.min(1000 + attempt * 250, 2500));
+            }
+          }
+          await loadRemoteEvent(eventId);
+          showView("game");
+          clearCheckoutParams();
+          toast(
+            waitForWebhook
+              ? "Pagamento ricevuto. L’attivazione richiede più tempo: riprova tra poco."
+              : "Pagamento annullato: la bozza è ancora disponibile",
+          );
+        } catch (error) {
+          console.error(error);
+          toast("Non riesco a riaprire l’evento. Puoi recuperarlo da I miei eventi.");
+        }
+      }
+
       const path = location.pathname;
       if (path.startsWith("/e/")) {
         document.getElementById("eventCode").value = path
@@ -2116,6 +2168,12 @@
         showView("join");
       } else if (path === "/crea") startCreator();
       renderQuests();
+      if (
+        ["success", "cancelled"].includes(paymentState) &&
+        returnedEventId
+      ) {
+        reopenEventAfterCheckout(returnedEventId, paymentState === "success");
+      }
     </script>
   </body>
 </html>
