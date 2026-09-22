@@ -34,7 +34,15 @@ Il codice `DEMO26` apre la demo senza scrivere dati.
 ## Configurazione pagamenti
 
 Impostare le variabili elencate in `.env.example`. Il webhook Stripe deve puntare a
-`/api/stripe-webhook` e ascoltare `checkout.session.completed`.
+`/api/stripe-webhook` e ascoltare `checkout.session.completed` e
+`checkout.session.async_payment_succeeded`.
+
+Dopo Stripe Checkout il browser riapre automaticamente la bozza e attende che
+il webhook imposti `purchase_status = paid`. Se il webhook è in ritardo, la
+bozza resta recuperabile da **I miei eventi** e può essere riaperta senza perdere dati.
+
+Il pagamento non va considerato operativo finché le variabili Stripe non sono
+configurate su Vercel e non è stato completato almeno un test end-to-end in modalità test.
 
 ## Prossima milestone
 
