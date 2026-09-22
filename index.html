@@ -978,9 +978,11 @@
                 <button
                   type="button"
                   class="choice selected"
-                  data-value="Addio"
+                  data-value="Addio al celibato"
                 >
-                  🥂 Addio</button
+                  🥂 Addio al celibato</button
+                ><button type="button" class="choice" data-value="Addio al nubilato">
+                  💍 Addio al nubilato</button
                 ><button type="button" class="choice" data-value="Compleanno">
                   🎂 Compleanno</button
                 ><button type="button" class="choice" data-value="Laurea">
@@ -1014,11 +1016,6 @@
                 <option>Un giorno</option>
                 <option>Un weekend</option>
                 <option>Un viaggio intero</option></select
-              ><label for="note">Dettaglio speciale (facoltativo)</label
-              ><textarea
-                id="note"
-                placeholder="Un inside joke, una passione o qualcosa da evitare…"
-              ></textarea
               ><button
                 class="btn primary full"
                 type="submit"
@@ -1037,7 +1034,7 @@
                 dimenticherà.
               </p>
               <div class="statRow">
-                <div class="stat"><strong>30</strong><span>missioni</span></div>
+                <div class="stat"><strong id="previewMissionCount">13</strong><span>missioni</span></div>
                 <div class="stat"><strong id="previewGoal">100</strong><span>punti obiettivo</span></div>
                 <div class="stat">
                   <strong>∞</strong><span>partecipanti</span>
@@ -1218,10 +1215,10 @@
         </button>
       </div>
     </section>
-    <dialog id="inviteDialog" class="inviteDialog">
+    <dialog id="inviteDialog" class="inviteDialog" aria-labelledby="inviteDialogTitle">
       <div class="inviteDialogInner">
         <div class="eyebrow">Invito partecipanti</div>
-        <h2>Scansiona e gioca</h2>
+        <h2 id="inviteDialogTitle">Scansiona e gioca</h2>
         <p>Il QR apre direttamente la schermata di ingresso dell'evento.</p>
         <div class="qrWrap"><canvas id="inviteQr" aria-label="QR code dell'invito"></canvas></div>
         <strong id="inviteDialogCode" class="inviteCode">--------</strong>
@@ -1231,7 +1228,7 @@
         </div>
       </div>
     </dialog>
-    <div id="toast" class="toast hidden"></div>
+    <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
     <script>
@@ -1301,7 +1298,7 @@
           desc: "Una foto di gruppo memorabile con una posa mai vista prima.",
         },
       ];
-      let selectedType = "Addio",
+      let selectedType = "Addio al celibato",
         filter = "Tutte",
         completed = new Set(),
         currentEventId = null,
@@ -1410,7 +1407,8 @@
       );
       function updatePreview() {
         const icons = {
-          Addio: "🥂",
+          "Addio al celibato": "🥂",
+          "Addio al nubilato": "💍",
           Compleanno: "🎂",
           Laurea: "🎓",
           Viaggio: "✈️",
@@ -1423,9 +1421,12 @@
           `Missioni ${document.getElementById("tone").value.toLowerCase()} per un evento che il gruppo non dimenticherà.`;
         document.getElementById("previewGoal").textContent =
           document.getElementById("tone").value.startsWith("Folle") ? "200" : "100";
+        document.getElementById("previewMissionCount").textContent =
+          document.getElementById("tone").value.startsWith("Folle") ? "8" : "13";
       }
       const typeMap = {
-        Addio: "bachelor_party",
+        "Addio al celibato": "bachelor_party",
+        "Addio al nubilato": "bachelorette_party",
         Compleanno: "birthday",
         Laurea: "graduation",
         Viaggio: "trip",
