@@ -19,6 +19,11 @@ MVP commerciale separato dal prototipo Pasaporte del Novio e da Slotta.
 - Accesso ai media limitato ai membri dello stesso evento
 - Modifica e disattivazione missioni riservata all'organizzatore
 - Invito partecipanti tramite QR, link, codice e condivisione nativa mobile
+- Catalogo classico bilanciato: 13 missioni e 190 punti per le tipologie principali
+- Catalogo Folle: 8 missioni e 340 punti disponibili
+- PWA installabile con schermata offline e icona dedicata
+- Checkout consentito esclusivamente all'organizzatore autenticato
+- Limiti anti-abuso sulle bozze e protezione del ciclo di vita dell'evento
 - Stati evento protetti: bozza, pronto, attivo, concluso e ricordo
 - Galleria privata con URL temporanei firmati
 
@@ -46,4 +51,4 @@ configurate su Vercel e non è stato completato almeno un test end-to-end in mod
 
 ## Prossima milestone
 
-Configurazione Stripe di produzione, test end-to-end del pagamento e rifinitura onboarding.
+Completare la checklist manuale di rilascio e il test end-to-end del pagamento.

@@ -38,6 +38,7 @@ for(const token of ['stripe-signature','activate_paid_event','checkout.session.a
 if(!manifest.icons?.length || !manifest.scope) throw new Error('PWA manifest is incomplete');
 if(!fs.existsSync(new URL('../sw.js',import.meta.url))) throw new Error('Missing service worker');
 if(!fs.existsSync(new URL('../privacy.html',import.meta.url)) || !fs.existsSync(new URL('../terms.html',import.meta.url))) throw new Error('Missing legal drafts');
+if(!fs.existsSync(new URL('../docs/RELEASE_CHECKLIST.md',import.meta.url))) throw new Error('Missing release checklist');
 if(!JSON.stringify(vercel).includes('X-Frame-Options')) throw new Error('Security headers are incomplete');
 if(/sk_(?:test|live)_|whsec_|service_role\s*=\s*[A-Za-z0-9_-]{20,}/.test([html,checkout,webhook].join('\n'))){
   throw new Error('A server secret appears to be committed');
