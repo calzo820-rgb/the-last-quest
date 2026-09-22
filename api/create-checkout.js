@@ -15,6 +15,20 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: 'Richiesta non valida' });
     }
 
+    const userResponse = await fetch(`${process.env.SUPABASE_URL}/auth/v1/user`, {
+      headers: {
+        apikey: process.env.SUPABASE_PUBLISHABLE_KEY,
+        Authorization: authHeader
+      }
+    });
+    if (!userResponse.ok) {
+      return res.status(401).json({ error: 'Sessione non valida o scaduta' });
+    }
+    const user = await userResponse.json();
+    if (!uuidPattern.test(user?.id || '')) {
+      return res.status(401).json({ error: 'Sessione non valida o scaduta' });
+    }
+
     const eventResponse = await fetch(
       `${process.env.SUPABASE_URL}/rest/v1/events?id=eq.${encodeURIComponent(eventId)}&select=id,name,purchase_status,owner_user_id`,
       { headers: { apikey: process.env.SUPABASE_PUBLISHABLE_KEY, Authorization: authHeader } }
@@ -27,6 +41,9 @@ module.exports = async function handler(req, res) {
     const events = await eventResponse.json();
     const event = events[0];
     if (!event) return res.status(403).json({ error: 'Evento non disponibile' });
+    if (event.owner_user_id !== user.id) {
+      return res.status(403).json({ error: 'Solo l’organizzatore può acquistare l’evento' });
+    }
     if (event.purchase_status === 'paid') {
       return res.status(409).json({ error: 'Evento già pagato' });
     }
