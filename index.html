@@ -1,89 +1,2013 @@
 <!doctype html>
 <html lang="it">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0b0b12">
-  <meta name="description" content="Crea una sfida di gruppo fatta di missioni, prove e ricordi. Un evento, un link, un'ultima grande quest.">
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%230b0b12'/%3E%3Cpath d='M18 43 31 12l6 17 10-6-8 25H18Z' fill='%23ffcc33' stroke='%23fff' stroke-width='3'/%3E%3C/svg%3E">
-  <title>The Last Quest</title>
-  <style>
-    :root{--bg:#0b0b12;--panel:#151520;--panel2:#1d1d2b;--text:#f7f5ef;--muted:#aaa8b5;--line:#303044;--yellow:#ffcc33;--pink:#ff4f8b;--cyan:#52e0ff;--green:#61e294;--danger:#ff6b6b;--shadow:0 20px 70px rgba(0,0,0,.35)}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 80% -10%,#2a1d4c 0,transparent 35%),var(--bg);color:var(--text);font:16px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}.shell{width:min(1120px,calc(100% - 32px));margin:auto}.topbar{height:72px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:10px;font-weight:950;letter-spacing:-.03em}.brandMark{display:grid;place-items:center;width:38px;height:38px;background:var(--yellow);color:#111;border-radius:12px;transform:rotate(-4deg);box-shadow:5px 5px 0 var(--pink)}.brandMark svg{width:23px}.navActions{display:flex;gap:9px}.btn{border:1px solid var(--line);color:var(--text);background:var(--panel);border-radius:14px;padding:12px 17px;font-weight:850;transition:.18s transform,.18s border-color}.btn:hover{transform:translateY(-2px);border-color:#585875}.btn.primary{background:var(--yellow);color:#111;border-color:var(--yellow);box-shadow:5px 5px 0 var(--pink)}.btn.ghost{background:transparent}.btn.full{width:100%}.eyebrow{color:var(--yellow);font-weight:900;text-transform:uppercase;letter-spacing:.18em;font-size:.76rem}.hero{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:center;min-height:calc(100vh - 72px);padding:50px 0 90px}.hero h1{font-size:clamp(3.2rem,8vw,7.2rem);line-height:.87;letter-spacing:-.075em;margin:16px 0 26px;max-width:780px}.hero h1 span{color:var(--yellow);text-shadow:6px 6px 0 var(--pink)}.heroCopy>p{color:var(--muted);font-size:1.18rem;max-width:590px}.heroActions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.micro{color:var(--muted);font-size:.82rem;margin-top:18px}.phone{width:min(390px,100%);margin:auto;background:#101018;border:1px solid #3b3b51;border-radius:38px;padding:12px;box-shadow:0 35px 100px #000,13px 13px 0 rgba(255,79,139,.8);transform:rotate(2deg)}.phoneInner{overflow:hidden;border-radius:28px;background:linear-gradient(160deg,#25223b,#11111a);min-height:650px;padding:22px}.phoneTop{display:flex;justify-content:space-between;color:var(--muted);font-size:.78rem}.demoHero{margin:32px 0 18px}.demoHero h2{font-size:2.35rem;line-height:1;margin:8px 0}.meter{height:12px;background:#343246;border-radius:999px;overflow:hidden}.meter span{display:block;width:62%;height:100%;background:linear-gradient(90deg,var(--pink),var(--yellow))}.mission{background:rgba(255,255,255,.06);border:1px solid #41405a;border-radius:18px;padding:16px;margin-top:12px}.missionMeta{display:flex;justify-content:space-between;color:var(--yellow);font-size:.72rem;font-weight:900}.mission h3{margin:9px 0 5px;font-size:1.05rem}.mission p{color:#bbb8c8;font-size:.85rem;margin:0}.section{padding:92px 0}.section h2{font-size:clamp(2.3rem,5vw,4.6rem);letter-spacing:-.055em;line-height:.98;margin:12px 0 20px}.sectionIntro{color:var(--muted);max-width:660px;font-size:1.08rem}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}.feature{background:linear-gradient(145deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:22px;padding:24px}.featureIcon{font-size:2rem}.feature h3{font-size:1.2rem;margin:18px 0 7px}.feature p{color:var(--muted);margin:0}.priceBox{display:grid;grid-template-columns:1fr auto;align-items:center;gap:40px;background:var(--yellow);color:#111;border-radius:30px;padding:38px;margin-top:36px;box-shadow:12px 12px 0 var(--pink)}.price{font-size:clamp(3.5rem,7vw,6.4rem);line-height:1;font-weight:950;letter-spacing:-.07em}.priceBox ul{margin:12px 0 0;padding-left:20px}.view{min-height:100vh;padding-bottom:70px}.appHead{padding:22px 0;display:flex;justify-content:space-between;align-items:center}.appGrid{display:grid;grid-template-columns:.78fr 1.22fr;gap:24px;align-items:start}.panel{background:rgba(21,21,32,.92);border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:var(--shadow)}.panel h1,.panel h2{letter-spacing:-.04em;line-height:1.05;margin:6px 0 14px}.steps{display:flex;gap:7px;margin:20px 0}.step{height:6px;flex:1;background:#343445;border-radius:999px}.step.done{background:var(--yellow)}label{display:block;color:#d2d0dc;font-size:.85rem;font-weight:800;margin:17px 0 7px}input,select,textarea{width:100%;padding:13px 14px;background:#0f0f17;border:1px solid #39394d;border-radius:13px;color:var(--text);outline:none}textarea{min-height:96px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--yellow);box-shadow:0 0 0 3px rgba(255,204,51,.12)}.choices{display:grid;grid-template-columns:1fr 1fr;gap:9px}.choice{border:1px solid var(--line);background:#101018;color:var(--text);border-radius:15px;padding:14px;text-align:left;font-weight:800}.choice.selected{border-color:var(--yellow);background:#292412}.previewCard{min-height:560px;background:linear-gradient(155deg,#26233a,#0d0d14);border-radius:22px;padding:28px;position:relative;overflow:hidden}.previewCard:after{content:"";position:absolute;width:260px;height:260px;border:70px solid rgba(255,204,51,.07);border-radius:50%;right:-120px;top:-100px}.tag{display:inline-flex;padding:7px 10px;border-radius:999px;background:#2e2944;color:var(--cyan);font-size:.75rem;font-weight:900}.previewCard h2{font-size:clamp(2.3rem,5vw,4.2rem);max-width:600px}.statRow{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:26px}.stat{background:rgba(255,255,255,.06);padding:14px;border-radius:15px}.stat strong{display:block;font-size:1.45rem}.stat span{color:var(--muted);font-size:.75rem}.joinCard{width:min(460px,calc(100% - 32px));margin:10vh auto}.joinCard .brand{margin-bottom:36px}.joinCard h1{font-size:3rem}.codeInput{text-transform:uppercase;letter-spacing:.18em;text-align:center;font-size:1.2rem;font-weight:900}.gameWrap{width:min(760px,calc(100% - 28px));margin:auto}.gameHero{padding:28px 0 14px}.gameHero h1{font-size:clamp(2.4rem,8vw,4.5rem);margin:8px 0}.scoreLine{display:flex;justify-content:space-between;align-items:end}.scoreLine strong{font-size:2.6rem}.filters{display:flex;gap:8px;overflow:auto;padding:14px 0;scrollbar-width:none}.filters .btn{white-space:nowrap;padding:9px 13px;font-size:.8rem}.quest{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px;margin:10px 0}.quest.done{border-color:#276341;background:#11251b}.questTop{display:flex;justify-content:space-between;font-size:.75rem;font-weight:900;color:var(--yellow)}.quest h3{margin:10px 0 5px}.quest p{margin:0;color:var(--muted)}.questActions{display:flex;gap:8px;margin-top:15px}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--text);color:#111;padding:11px 16px;border-radius:13px;font-weight:850;z-index:50;box-shadow:var(--shadow)}footer{padding:48px 0;color:var(--muted);border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px}.legal{font-size:.78rem;color:var(--muted)}
-    .organizerCard{margin-top:14px;padding:17px;background:#101018;border:1px solid var(--line);border-radius:18px}.organizerCard strong{display:block;font-size:1.8rem;letter-spacing:.13em;color:var(--yellow)}.organizerCard p{margin:4px 0 13px;color:var(--muted);font-size:.85rem}.organizerActions{display:flex;gap:8px;flex-wrap:wrap}.statusPill{display:inline-flex;padding:5px 9px;border-radius:999px;background:#29243a;color:var(--cyan);font-size:.72rem;font-weight:900;margin-bottom:8px}.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}.galleryItem{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}.galleryItem img,.galleryItem video{display:block;width:100%;aspect-ratio:1;object-fit:cover}.galleryItem span{display:block;padding:9px;font-size:.75rem;color:var(--muted)}.eventList{display:grid;gap:12px;margin-top:24px}.eventRow{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:19px;padding:18px}.eventRow h3{margin:3px 0}.eventRow p{margin:0;color:var(--muted);font-size:.85rem}.finalCard{background:linear-gradient(145deg,#f4e7bd,#fff8e4);color:#221b12;border:9px double #8b6a2d;border-radius:12px;padding:42px 28px;text-align:center;box-shadow:var(--shadow)}.finalCard h1{font-family:Georgia,serif;font-size:clamp(2.4rem,7vw,5.5rem);line-height:.95;margin:16px 0}.finalCard .finalScore{font-size:3.5rem;font-weight:950;color:#8b2e52}.finalCard p{max-width:580px;margin:12px auto}
-    @media(max-width:800px){.navActions .ghost{display:none}.hero{grid-template-columns:1fr;padding-top:25px}.heroCopy{text-align:center}.heroCopy>p{margin-inline:auto}.heroActions{justify-content:center}.phone{width:340px}.grid3{grid-template-columns:1fr}.priceBox{grid-template-columns:1fr}.appGrid{grid-template-columns:1fr}.previewPanel{order:-1}.previewCard{min-height:390px}.choices{grid-template-columns:1fr}.shell{width:min(100% - 24px,1120px)}.section{padding:65px 0}footer{flex-direction:column}.appHead .brand span:last-child{display:none}.gallery{grid-template-columns:1fr 1fr}.eventRow{grid-template-columns:1fr}}
-    @media print{body{background:#fff}.appHead,#finale>.shell>button{display:none!important}#finale{display:block!important;padding:0}.finalCard{box-shadow:none;min-height:90vh;display:flex;flex-direction:column;justify-content:center}}
-  </style>
-</head>
-<body>
-  <main id="landing">
-    <header class="topbar shell"><div class="brand"><span class="brandMark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 18 5-13 3 7 6-3-4 11H5Z"/></svg></span><span>THE LAST QUEST</span></div><div class="navActions"><button class="btn ghost" onclick="openMyEvents()">I tuoi eventi</button><button class="btn ghost" onclick="showView('join')">Entra con un codice</button><button class="btn primary" onclick="startCreator()">Crea il tuo evento</button></div></header>
-    <section class="hero shell"><div class="heroCopy"><div class="eyebrow">Il gruppo è pronto. Tu hai una missione.</div><h1>Rendilo <span>leggendario.</span></h1><p>Crea un gioco condiviso di missioni, prove fotografiche e momenti memorabili per addii, compleanni, lauree e viaggi.</p><div class="heroActions"><button class="btn primary" onclick="startCreator()">Crea un evento — 19,99 €</button><button class="btn" onclick="openDemo()">Prova la demo</button></div><div class="micro">Un solo acquisto · Tutte le funzioni · Nessun abbonamento</div></div>
-      <div class="phone" aria-label="Anteprima dell'app"><div class="phoneInner"><div class="phoneTop"><span>THE LAST QUEST</span><span>12 partecipanti</span></div><div class="demoHero"><div class="eyebrow">Addio al celibato</div><h2>L'ultima quest di Luca</h2><div class="scoreLine"><strong>124 PT</strong><span>7/12 prove</span></div><div class="meter"><span></span></div></div><div class="mission"><div class="missionMeta"><span>MISSIONE #08</span><span>+15 PT</span></div><h3>La copertina dell'album</h3><p>Coinvolgete sei sconosciuti in una foto serissima da copertina rap.</p></div><div class="mission"><div class="missionMeta"><span>MISSIONE #14</span><span>+20 PT</span></div><h3>Il brindisi impossibile</h3><p>Un brindisi in tre lingue diverse, tutto nello stesso video.</p></div></div></div>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#0b0b12" />
+    <meta
+      name="description"
+      content="Crea una sfida di gruppo fatta di missioni, prove e ricordi. Un evento, un link, un'ultima grande quest."
+    />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%230b0b12'/%3E%3Cpath d='M18 43 31 12l6 17 10-6-8 25H18Z' fill='%23ffcc33' stroke='%23fff' stroke-width='3'/%3E%3C/svg%3E"
+    />
+    <title>The Last Quest</title>
+    <style>
+      :root {
+        --bg: #0b0b12;
+        --panel: #151520;
+        --panel2: #1d1d2b;
+        --text: #f7f5ef;
+        --muted: #aaa8b5;
+        --line: #303044;
+        --yellow: #ffcc33;
+        --pink: #ff4f8b;
+        --cyan: #52e0ff;
+        --green: #61e294;
+        --danger: #ff6b6b;
+        --shadow: 0 20px 70px rgba(0, 0, 0, 0.35);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at 80% -10%, #2a1d4c 0, transparent 35%),
+          var(--bg);
+        color: var(--text);
+        font:
+          16px/1.5 Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      .hidden {
+        display: none !important;
+      }
+      .shell {
+        width: min(1120px, calc(100% - 32px));
+        margin: auto;
+      }
+      .topbar {
+        height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 950;
+        letter-spacing: -0.03em;
+      }
+      .brandMark {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        background: var(--yellow);
+        color: #111;
+        border-radius: 12px;
+        transform: rotate(-4deg);
+        box-shadow: 5px 5px 0 var(--pink);
+      }
+      .brandMark svg {
+        width: 23px;
+      }
+      .navActions {
+        display: flex;
+        gap: 9px;
+      }
+      .btn {
+        border: 1px solid var(--line);
+        color: var(--text);
+        background: var(--panel);
+        border-radius: 14px;
+        padding: 12px 17px;
+        font-weight: 850;
+        transition:
+          0.18s transform,
+          0.18s border-color;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+        border-color: #585875;
+      }
+      .btn.primary {
+        background: var(--yellow);
+        color: #111;
+        border-color: var(--yellow);
+        box-shadow: 5px 5px 0 var(--pink);
+      }
+      .btn.ghost {
+        background: transparent;
+      }
+      .btn.full {
+        width: 100%;
+      }
+      .eyebrow {
+        color: var(--yellow);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 0.76rem;
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: 1.08fr 0.92fr;
+        gap: 56px;
+        align-items: center;
+        min-height: calc(100vh - 72px);
+        padding: 50px 0 90px;
+      }
+      .hero h1 {
+        font-size: clamp(3.2rem, 8vw, 7.2rem);
+        line-height: 0.87;
+        letter-spacing: -0.075em;
+        margin: 16px 0 26px;
+        max-width: 780px;
+      }
+      .hero h1 span {
+        color: var(--yellow);
+        text-shadow: 6px 6px 0 var(--pink);
+      }
+      .heroCopy > p {
+        color: var(--muted);
+        font-size: 1.18rem;
+        max-width: 590px;
+      }
+      .heroActions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+      }
+      .micro {
+        color: var(--muted);
+        font-size: 0.82rem;
+        margin-top: 18px;
+      }
+      .phone {
+        width: min(390px, 100%);
+        margin: auto;
+        background: #101018;
+        border: 1px solid #3b3b51;
+        border-radius: 38px;
+        padding: 12px;
+        box-shadow:
+          0 35px 100px #000,
+          13px 13px 0 rgba(255, 79, 139, 0.8);
+        transform: rotate(2deg);
+      }
+      .phoneInner {
+        overflow: hidden;
+        border-radius: 28px;
+        background: linear-gradient(160deg, #25223b, #11111a);
+        min-height: 650px;
+        padding: 22px;
+      }
+      .phoneTop {
+        display: flex;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+      .demoHero {
+        margin: 32px 0 18px;
+      }
+      .demoHero h2 {
+        font-size: 2.35rem;
+        line-height: 1;
+        margin: 8px 0;
+      }
+      .meter {
+        height: 12px;
+        background: #343246;
+        border-radius: 999px;
+        overflow: hidden;
+      }
+      .meter span {
+        display: block;
+        width: 62%;
+        height: 100%;
+        background: linear-gradient(90deg, var(--pink), var(--yellow));
+      }
+      .mission {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid #41405a;
+        border-radius: 18px;
+        padding: 16px;
+        margin-top: 12px;
+      }
+      .missionMeta {
+        display: flex;
+        justify-content: space-between;
+        color: var(--yellow);
+        font-size: 0.72rem;
+        font-weight: 900;
+      }
+      .mission h3 {
+        margin: 9px 0 5px;
+        font-size: 1.05rem;
+      }
+      .mission p {
+        color: #bbb8c8;
+        font-size: 0.85rem;
+        margin: 0;
+      }
+      .section {
+        padding: 92px 0;
+      }
+      .section h2 {
+        font-size: clamp(2.3rem, 5vw, 4.6rem);
+        letter-spacing: -0.055em;
+        line-height: 0.98;
+        margin: 12px 0 20px;
+      }
+      .sectionIntro {
+        color: var(--muted);
+        max-width: 660px;
+        font-size: 1.08rem;
+      }
+      .grid3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 40px;
+      }
+      .feature {
+        background: linear-gradient(145deg, var(--panel2), var(--panel));
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        padding: 24px;
+      }
+      .featureIcon {
+        font-size: 2rem;
+      }
+      .feature h3 {
+        font-size: 1.2rem;
+        margin: 18px 0 7px;
+      }
+      .feature p {
+        color: var(--muted);
+        margin: 0;
+      }
+      .priceBox {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 40px;
+        background: var(--yellow);
+        color: #111;
+        border-radius: 30px;
+        padding: 38px;
+        margin-top: 36px;
+        box-shadow: 12px 12px 0 var(--pink);
+      }
+      .price {
+        font-size: clamp(3.5rem, 7vw, 6.4rem);
+        line-height: 1;
+        font-weight: 950;
+        letter-spacing: -0.07em;
+      }
+      .priceBox ul {
+        margin: 12px 0 0;
+        padding-left: 20px;
+      }
+      .view {
+        min-height: 100vh;
+        padding-bottom: 70px;
+      }
+      .appHead {
+        padding: 22px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .appGrid {
+        display: grid;
+        grid-template-columns: 0.78fr 1.22fr;
+        gap: 24px;
+        align-items: start;
+      }
+      .panel {
+        background: rgba(21, 21, 32, 0.92);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+      }
+      .panel h1,
+      .panel h2 {
+        letter-spacing: -0.04em;
+        line-height: 1.05;
+        margin: 6px 0 14px;
+      }
+      .steps {
+        display: flex;
+        gap: 7px;
+        margin: 20px 0;
+      }
+      .step {
+        height: 6px;
+        flex: 1;
+        background: #343445;
+        border-radius: 999px;
+      }
+      .step.done {
+        background: var(--yellow);
+      }
+      label {
+        display: block;
+        color: #d2d0dc;
+        font-size: 0.85rem;
+        font-weight: 800;
+        margin: 17px 0 7px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 13px 14px;
+        background: #0f0f17;
+        border: 1px solid #39394d;
+        border-radius: 13px;
+        color: var(--text);
+        outline: none;
+      }
+      textarea {
+        min-height: 96px;
+        resize: vertical;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--yellow);
+        box-shadow: 0 0 0 3px rgba(255, 204, 51, 0.12);
+      }
+      .choices {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+      }
+      .choice {
+        border: 1px solid var(--line);
+        background: #101018;
+        color: var(--text);
+        border-radius: 15px;
+        padding: 14px;
+        text-align: left;
+        font-weight: 800;
+      }
+      .choice.selected {
+        border-color: var(--yellow);
+        background: #292412;
+      }
+      .previewCard {
+        min-height: 560px;
+        background: linear-gradient(155deg, #26233a, #0d0d14);
+        border-radius: 22px;
+        padding: 28px;
+        position: relative;
+        overflow: hidden;
+      }
+      .previewCard:after {
+        content: "";
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        border: 70px solid rgba(255, 204, 51, 0.07);
+        border-radius: 50%;
+        right: -120px;
+        top: -100px;
+      }
+      .tag {
+        display: inline-flex;
+        padding: 7px 10px;
+        border-radius: 999px;
+        background: #2e2944;
+        color: var(--cyan);
+        font-size: 0.75rem;
+        font-weight: 900;
+      }
+      .previewCard h2 {
+        font-size: clamp(2.3rem, 5vw, 4.2rem);
+        max-width: 600px;
+      }
+      .statRow {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 9px;
+        margin-top: 26px;
+      }
+      .stat {
+        background: rgba(255, 255, 255, 0.06);
+        padding: 14px;
+        border-radius: 15px;
+      }
+      .stat strong {
+        display: block;
+        font-size: 1.45rem;
+      }
+      .stat span {
+        color: var(--muted);
+        font-size: 0.75rem;
+      }
+      .joinCard {
+        width: min(460px, calc(100% - 32px));
+        margin: 10vh auto;
+      }
+      .joinCard .brand {
+        margin-bottom: 36px;
+      }
+      .joinCard h1 {
+        font-size: 3rem;
+      }
+      .codeInput {
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 900;
+      }
+      .gameWrap {
+        width: min(760px, calc(100% - 28px));
+        margin: auto;
+      }
+      .gameHero {
+        padding: 28px 0 14px;
+      }
+      .gameHero h1 {
+        font-size: clamp(2.4rem, 8vw, 4.5rem);
+        margin: 8px 0;
+      }
+      .scoreLine {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+      }
+      .scoreLine strong {
+        font-size: 2.6rem;
+      }
+      .filters {
+        display: flex;
+        gap: 8px;
+        overflow: auto;
+        padding: 14px 0;
+        scrollbar-width: none;
+      }
+      .filters .btn {
+        white-space: nowrap;
+        padding: 9px 13px;
+        font-size: 0.8rem;
+      }
+      .quest {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 18px;
+        margin: 10px 0;
+      }
+      .quest.done {
+        border-color: #276341;
+        background: #11251b;
+      }
+      .questTop {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        font-weight: 900;
+        color: var(--yellow);
+      }
+      .quest h3 {
+        margin: 10px 0 5px;
+      }
+      .quest p {
+        margin: 0;
+        color: var(--muted);
+      }
+      .questActions {
+        display: flex;
+        gap: 8px;
+        margin-top: 15px;
+      }
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 24px;
+        transform: translateX(-50%);
+        background: var(--text);
+        color: #111;
+        padding: 11px 16px;
+        border-radius: 13px;
+        font-weight: 850;
+        z-index: 50;
+        box-shadow: var(--shadow);
+      }
+      footer {
+        padding: 48px 0;
+        color: var(--muted);
+        border-top: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+      }
+      .legal {
+        font-size: 0.78rem;
+        color: var(--muted);
+      }
+      .organizerCard {
+        margin-top: 14px;
+        padding: 17px;
+        background: #101018;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+      }
+      .organizerCard strong {
+        display: block;
+        font-size: 1.8rem;
+        letter-spacing: 0.13em;
+        color: var(--yellow);
+      }
+      .organizerCard p {
+        margin: 4px 0 13px;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+      .organizerActions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .statusPill {
+        display: inline-flex;
+        padding: 5px 9px;
+        border-radius: 999px;
+        background: #29243a;
+        color: var(--cyan);
+        font-size: 0.72rem;
+        font-weight: 900;
+        margin-bottom: 8px;
+      }
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin: 18px 0;
+      }
+      .galleryItem {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      .galleryItem img,
+      .galleryItem video {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+      }
+      .galleryItem span {
+        display: block;
+        padding: 9px;
+        font-size: 0.75rem;
+        color: var(--muted);
+      }
+      .eventList {
+        display: grid;
+        gap: 12px;
+        margin-top: 24px;
+      }
+      .eventRow {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 18px;
+        align-items: center;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 19px;
+        padding: 18px;
+      }
+      .eventRow h3 {
+        margin: 3px 0;
+      }
+      .eventRow p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+      .finalCard {
+        background: linear-gradient(145deg, #f4e7bd, #fff8e4);
+        color: #221b12;
+        border: 9px double #8b6a2d;
+        border-radius: 12px;
+        padding: 42px 28px;
+        text-align: center;
+        box-shadow: var(--shadow);
+      }
+      .finalCard h1 {
+        font-family: Georgia, serif;
+        font-size: clamp(2.4rem, 7vw, 5.5rem);
+        line-height: 0.95;
+        margin: 16px 0;
+      }
+      .finalCard .finalScore {
+        font-size: 3.5rem;
+        font-weight: 950;
+        color: #8b2e52;
+      }
+      .finalCard p {
+        max-width: 580px;
+        margin: 12px auto;
+      }
+      @media (max-width: 800px) {
+        .navActions .ghost {
+          display: none;
+        }
+        .hero {
+          grid-template-columns: 1fr;
+          padding-top: 25px;
+        }
+        .heroCopy {
+          text-align: center;
+        }
+        .heroCopy > p {
+          margin-inline: auto;
+        }
+        .heroActions {
+          justify-content: center;
+        }
+        .phone {
+          width: 340px;
+        }
+        .grid3 {
+          grid-template-columns: 1fr;
+        }
+        .priceBox {
+          grid-template-columns: 1fr;
+        }
+        .appGrid {
+          grid-template-columns: 1fr;
+        }
+        .previewPanel {
+          order: -1;
+        }
+        .previewCard {
+          min-height: 390px;
+        }
+        .choices {
+          grid-template-columns: 1fr;
+        }
+        .shell {
+          width: min(100% - 24px, 1120px);
+        }
+        .section {
+          padding: 65px 0;
+        }
+        footer {
+          flex-direction: column;
+        }
+        .appHead .brand span:last-child {
+          display: none;
+        }
+        .gallery {
+          grid-template-columns: 1fr 1fr;
+        }
+        .eventRow {
+          grid-template-columns: 1fr;
+        }
+      }
+      .alcoholCard {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 18px;
+        padding: 16px 18px;
+        border: 1px solid #754f20;
+        border-radius: 18px;
+        background: linear-gradient(135deg, #2c2111, #17141a);
+      }
+      .alcoholCard strong {
+        display: block;
+        font-size: 1.65rem;
+      }
+      .alcoholCard small {
+        display: block;
+        color: var(--muted);
+      }
+      .alcoholActions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .alcoholCount {
+        min-width: 48px;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 950;
+        color: var(--yellow);
+      }
+      .modeFolle {
+        color: var(--pink);
+        font-weight: 950;
+      }
+      .goalReached {
+        color: var(--green);
+        font-weight: 950;
+      }
+      @media (max-width: 800px) {
+        .alcoholCard {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        .alcoholActions {
+          width: 100%;
+          justify-content: space-between;
+        }
+      }
+      @media print {
+        body {
+          background: #fff;
+        }
+        .appHead,
+        #finale > .shell > button {
+          display: none !important;
+        }
+        #finale {
+          display: block !important;
+          padding: 0;
+        }
+        .finalCard {
+          box-shadow: none;
+          min-height: 90vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="landing">
+      <header class="topbar shell">
+        <div class="brand">
+          <span class="brandMark"
+            ><svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path d="m5 18 5-13 3 7 6-3-4 11H5Z" /></svg></span
+          ><span>THE LAST QUEST</span>
+        </div>
+        <div class="navActions">
+          <button class="btn ghost" onclick="openMyEvents()">
+            I tuoi eventi</button
+          ><button class="btn ghost" onclick="showView('join')">
+            Entra con un codice</button
+          ><button class="btn primary" onclick="startCreator()">
+            Crea il tuo evento
+          </button>
+        </div>
+      </header>
+      <section class="hero shell">
+        <div class="heroCopy">
+          <div class="eyebrow">Il gruppo è pronto. Tu hai una missione.</div>
+          <h1>Rendilo <span>leggendario.</span></h1>
+          <p>
+            Crea un gioco condiviso di missioni, prove fotografiche e momenti
+            memorabili per addii, compleanni, lauree e viaggi.
+          </p>
+          <div class="heroActions">
+            <button class="btn primary" onclick="startCreator()">
+              Crea un evento — 19,99 €</button
+            ><button class="btn" onclick="openDemo()">Prova la demo</button>
+          </div>
+          <div class="micro">
+            Un solo acquisto · Tutte le funzioni · Nessun abbonamento
+          </div>
+        </div>
+        <div class="phone" aria-label="Anteprima dell'app">
+          <div class="phoneInner">
+            <div class="phoneTop">
+              <span>THE LAST QUEST</span><span>12 partecipanti</span>
+            </div>
+            <div class="demoHero">
+              <div class="eyebrow">Addio al celibato</div>
+              <h2>L'ultima quest di Luca</h2>
+              <div class="scoreLine">
+                <strong>124 PT</strong><span>7/12 prove</span>
+              </div>
+              <div class="meter"><span></span></div>
+            </div>
+            <div class="mission">
+              <div class="missionMeta">
+                <span>MISSIONE #08</span><span>+15 PT</span>
+              </div>
+              <h3>La copertina dell'album</h3>
+              <p>
+                Coinvolgete sei sconosciuti in una foto serissima da copertina
+                rap.
+              </p>
+            </div>
+            <div class="mission">
+              <div class="missionMeta">
+                <span>MISSIONE #14</span><span>+20 PT</span>
+              </div>
+              <h3>Il brindisi impossibile</h3>
+              <p>
+                Un brindisi in tre lingue diverse, tutto nello stesso video.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section shell">
+        <div class="eyebrow">Come funziona</div>
+        <h2>Tu crei l'evento.<br />Il gruppo crea la storia.</h2>
+        <p class="sectionIntro">
+          Niente app complicate e niente account per tutti. Condividi un link o
+          un QR e iniziate.
+        </p>
+        <div class="grid3">
+          <article class="feature">
+            <div class="featureIcon">⚡</div>
+            <h3>Configura in pochi minuti</h3>
+            <p>
+              Scegli occasione, tono, durata e chi dovrà affrontare le missioni.
+            </p>
+          </article>
+          <article class="feature">
+            <div class="featureIcon">🧩</div>
+            <h3>Giocate insieme</h3>
+            <p>
+              Punteggi, foto, video e progressi si aggiornano per tutto il
+              gruppo.
+            </p>
+          </article>
+          <article class="feature">
+            <div class="featureIcon">🏆</div>
+            <h3>Conservate il finale</h3>
+            <p>
+              Alla fine resta una raccolta delle prove e un attestato
+              dell'impresa.
+            </p>
+          </article>
+        </div>
+      </section>
+      <section class="section shell">
+        <div class="eyebrow">Prezzo semplice</div>
+        <div class="priceBox">
+          <div>
+            <div class="price">19,99 €</div>
+            <strong>per un evento completo</strong>
+            <ul>
+              <li>Partecipanti senza limite prefissato</li>
+              <li>Missioni e modalità personalizzabili</li>
+              <li>Foto, video, classifica e ricordo finale</li>
+            </ul>
+          </div>
+          <button class="btn" onclick="startCreator()">
+            Inizia la tua quest
+          </button>
+        </div>
+      </section>
+      <footer class="shell">
+        <div class="brand">
+          <span class="brandMark">Q</span><span>THE LAST QUEST</span>
+        </div>
+        <div class="legal">
+          © 2026 · Gioca con rispetto, chiedi sempre il consenso e non metterti
+          in pericolo.
+        </div>
+      </footer>
+    </main>
+
+    <section id="creator" class="view hidden">
+      <div class="shell">
+        <header class="appHead">
+          <button class="btn ghost" onclick="showView('landing')">
+            ← Indietro
+          </button>
+          <div class="brand">
+            <span class="brandMark">Q</span><span>THE LAST QUEST</span>
+          </div>
+        </header>
+        <div class="appGrid">
+          <div class="panel">
+            <div class="eyebrow">Crea la tua quest</div>
+            <h1>Da che avventura partiamo?</h1>
+            <div class="steps">
+              <i class="step done"></i><i class="step"></i><i class="step"></i>
+            </div>
+            <form id="createForm">
+              <label>Occasione</label>
+              <div class="choices" id="eventChoices">
+                <button
+                  type="button"
+                  class="choice selected"
+                  data-value="Addio"
+                >
+                  🥂 Addio</button
+                ><button type="button" class="choice" data-value="Compleanno">
+                  🎂 Compleanno</button
+                ><button type="button" class="choice" data-value="Laurea">
+                  🎓 Laurea</button
+                ><button type="button" class="choice" data-value="Viaggio">
+                  ✈️ Viaggio
+                </button>
+              </div>
+              <label for="eventName">Titolo dell'evento</label
+              ><input
+                id="eventName"
+                required
+                maxlength="70"
+                value="L'ultima quest di Luca"
+              /><label for="heroName">Nome del protagonista o del gruppo</label
+              ><input
+                id="heroName"
+                required
+                maxlength="40"
+                value="Luca"
+              /><label for="tone">Modalità di gioco</label
+              ><select id="tone">
+                <option>Equilibrato</option>
+                <option>Divertente e leggero</option>
+                <option>Competitivo</option>
+                <option>Caotico ma sicuro</option>
+                <option>Folle — quasi impossibile</option></select
+              ><label for="duration">Durata</label
+              ><select id="duration">
+                <option>Una serata</option>
+                <option>Un giorno</option>
+                <option>Un weekend</option>
+                <option>Un viaggio intero</option></select
+              ><label for="note">Dettaglio speciale (facoltativo)</label
+              ><textarea
+                id="note"
+                placeholder="Un inside joke, una passione o qualcosa da evitare…"
+              ></textarea
+              ><button
+                class="btn primary full"
+                type="submit"
+                style="margin-top: 20px"
+              >
+                Genera l'anteprima
+              </button>
+            </form>
+          </div>
+          <aside class="panel previewPanel">
+            <div class="previewCard">
+              <span class="tag" id="previewType">🥂 ADDIO</span>
+              <h2 id="previewTitle">L'ultima quest di Luca</h2>
+              <p id="previewCopy">
+                Missioni equilibrate per una serata che il gruppo non
+                dimenticherà.
+              </p>
+              <div class="statRow">
+                <div class="stat"><strong>30</strong><span>missioni</span></div>
+                <div class="stat"><strong id="previewGoal">100</strong><span>punti obiettivo</span></div>
+                <div class="stat">
+                  <strong>∞</strong><span>partecipanti</span>
+                </div>
+              </div>
+              <div class="mission" style="margin-top: 26px">
+                <div class="missionMeta">
+                  <span>ANTEPRIMA</span><span>+10 PT</span>
+                </div>
+                <h3>Il titolo perfetto</h3>
+                <p>
+                  Fatevi dare da tre sconosciuti un soprannome ufficiale per il
+                  protagonista.
+                </p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
     </section>
-    <section class="section shell"><div class="eyebrow">Come funziona</div><h2>Tu crei l'evento.<br>Il gruppo crea la storia.</h2><p class="sectionIntro">Niente app complicate e niente account per tutti. Condividi un link o un QR e iniziate.</p><div class="grid3"><article class="feature"><div class="featureIcon">⚡</div><h3>Configura in pochi minuti</h3><p>Scegli occasione, tono, durata e chi dovrà affrontare le missioni.</p></article><article class="feature"><div class="featureIcon">🧩</div><h3>Giocate insieme</h3><p>Punteggi, foto, video e progressi si aggiornano per tutto il gruppo.</p></article><article class="feature"><div class="featureIcon">🏆</div><h3>Conservate il finale</h3><p>Alla fine resta una raccolta delle prove e un attestato dell'impresa.</p></article></div></section>
-    <section class="section shell"><div class="eyebrow">Prezzo semplice</div><div class="priceBox"><div><div class="price">19,99 €</div><strong>per un evento completo</strong><ul><li>Partecipanti senza limite prefissato</li><li>Missioni e modalità personalizzabili</li><li>Foto, video, classifica e ricordo finale</li></ul></div><button class="btn" onclick="startCreator()">Inizia la tua quest</button></div></section>
-    <footer class="shell"><div class="brand"><span class="brandMark">Q</span><span>THE LAST QUEST</span></div><div class="legal">© 2026 · Gioca con rispetto, chiedi sempre il consenso e non metterti in pericolo.</div></footer>
-  </main>
 
-  <section id="creator" class="view hidden"><div class="shell"><header class="appHead"><button class="btn ghost" onclick="showView('landing')">← Indietro</button><div class="brand"><span class="brandMark">Q</span><span>THE LAST QUEST</span></div></header><div class="appGrid"><div class="panel"><div class="eyebrow">Crea la tua quest</div><h1>Da che avventura partiamo?</h1><div class="steps"><i class="step done"></i><i class="step"></i><i class="step"></i></div><form id="createForm"><label>Occasione</label><div class="choices" id="eventChoices"><button type="button" class="choice selected" data-value="Addio">🥂 Addio</button><button type="button" class="choice" data-value="Compleanno">🎂 Compleanno</button><button type="button" class="choice" data-value="Laurea">🎓 Laurea</button><button type="button" class="choice" data-value="Viaggio">✈️ Viaggio</button></div><label for="eventName">Titolo dell'evento</label><input id="eventName" required maxlength="70" value="L'ultima quest di Luca"><label for="heroName">Nome del protagonista o del gruppo</label><input id="heroName" required maxlength="40" value="Luca"><label for="tone">Tono delle missioni</label><select id="tone"><option>Equilibrato</option><option>Divertente e leggero</option><option>Competitivo</option><option>Caotico ma sicuro</option></select><label for="duration">Durata</label><select id="duration"><option>Una serata</option><option>Un giorno</option><option>Un weekend</option><option>Un viaggio intero</option></select><label for="note">Dettaglio speciale (facoltativo)</label><textarea id="note" placeholder="Un inside joke, una passione o qualcosa da evitare…"></textarea><button class="btn primary full" type="submit" style="margin-top:20px">Genera l'anteprima</button></form></div><aside class="panel previewPanel"><div class="previewCard"><span class="tag" id="previewType">🥂 ADDIO</span><h2 id="previewTitle">L'ultima quest di Luca</h2><p id="previewCopy">Missioni equilibrate per una serata che il gruppo non dimenticherà.</p><div class="statRow"><div class="stat"><strong>30</strong><span>missioni</span></div><div class="stat"><strong>5</strong><span>categorie</span></div><div class="stat"><strong>∞</strong><span>partecipanti</span></div></div><div class="mission" style="margin-top:26px"><div class="missionMeta"><span>ANTEPRIMA</span><span>+10 PT</span></div><h3>Il titolo perfetto</h3><p>Fatevi dare da tre sconosciuti un soprannome ufficiale per il protagonista.</p></div></div></aside></div></div></section>
+    <section id="join" class="view hidden">
+      <div class="joinCard panel">
+        <div class="brand">
+          <span class="brandMark">Q</span><span>THE LAST QUEST</span>
+        </div>
+        <div class="eyebrow">Sei stato convocato</div>
+        <h1>Entra nella quest.</h1>
+        <p class="sectionIntro">
+          Inserisci il codice condiviso dall'organizzatore.
+        </p>
+        <form id="joinForm">
+          <label for="participantName">Il tuo nome</label
+          ><input
+            id="participantName"
+            required
+            maxlength="35"
+            placeholder="Come ti chiami?"
+          /><label for="eventCode">Codice evento</label
+          ><input
+            id="eventCode"
+            class="codeInput"
+            required
+            maxlength="10"
+            value="DEMO26"
+          /><button
+            class="btn primary full"
+            type="submit"
+            style="margin-top: 20px"
+          >
+            Entra nell'evento
+          </button>
+        </form>
+        <button
+          class="btn ghost full"
+          onclick="showView('landing')"
+          style="margin-top: 9px"
+        >
+          Torna alla home
+        </button>
+      </div>
+    </section>
 
-  <section id="join" class="view hidden"><div class="joinCard panel"><div class="brand"><span class="brandMark">Q</span><span>THE LAST QUEST</span></div><div class="eyebrow">Sei stato convocato</div><h1>Entra nella quest.</h1><p class="sectionIntro">Inserisci il codice condiviso dall'organizzatore.</p><form id="joinForm"><label for="participantName">Il tuo nome</label><input id="participantName" required maxlength="35" placeholder="Come ti chiami?"><label for="eventCode">Codice evento</label><input id="eventCode" class="codeInput" required maxlength="10" value="DEMO26"><button class="btn primary full" type="submit" style="margin-top:20px">Entra nell'evento</button></form><button class="btn ghost full" onclick="showView('landing')" style="margin-top:9px">Torna alla home</button></div></section>
+    <section id="account" class="view hidden">
+      <div class="shell">
+        <header class="appHead">
+          <button class="btn ghost" onclick="showView('landing')">
+            ← Home
+          </button>
+          <div class="brand">
+            <span class="brandMark">Q</span><span>I TUOI EVENTI</span>
+          </div>
+        </header>
+        <div class="panel">
+          <div class="eyebrow">Riprendi da dove eri rimasto</div>
+          <h1>Le tue quest</h1>
+          <p class="sectionIntro">
+            Gli eventi associati a questo dispositivo e alla sessione corrente.
+          </p>
+          <div id="eventList" class="eventList"></div>
+        </div>
+      </div>
+    </section>
 
-  <section id="account" class="view hidden"><div class="shell"><header class="appHead"><button class="btn ghost" onclick="showView('landing')">← Home</button><div class="brand"><span class="brandMark">Q</span><span>I TUOI EVENTI</span></div></header><div class="panel"><div class="eyebrow">Riprendi da dove eri rimasto</div><h1>Le tue quest</h1><p class="sectionIntro">Gli eventi associati a questo dispositivo e alla sessione corrente.</p><div id="eventList" class="eventList"></div></div></div></section>
+    <section id="game" class="view hidden">
+      <div class="gameWrap">
+        <header class="appHead">
+          <div class="brand">
+            <span class="brandMark">Q</span><span>THE LAST QUEST</span>
+          </div>
+          <button class="btn ghost" onclick="showView('landing')">Esci</button>
+        </header>
+        <div class="gameHero">
+          <div class="eyebrow" id="gameType">DEMO · ADDIO</div>
+          <h1 id="gameTitle">L'ultima quest di Luca</h1>
+          <div class="scoreLine">
+            <strong><span id="score">0</span> PT</strong
+            ><span id="doneCount">Obiettivo: 100 PT</span>
+          </div>
+          <div class="meter"><span id="scoreBar" style="width: 0"></span></div>
+          <div class="alcoholCard">
+            <div>
+              <strong>🥂 Etilometro</strong>
+              <small>Ogni alcolico registrato vale +1 PT. Bevete responsabilmente.</small>
+            </div>
+            <div class="alcoholActions">
+              <button id="alcoholMinus" class="btn" type="button" aria-label="Rimuovi un alcolico">−</button>
+              <span id="alcoholCount" class="alcoholCount">0</span>
+              <button id="alcoholPlus" class="btn primary" type="button">+1 alcolico</button>
+            </div>
+          </div>
+          <div id="organizerCard" class="organizerCard hidden">
+            <div class="eyebrow">Pannello organizzatore</div>
+            <span id="eventStatus" class="statusPill">BOZZA</span
+            ><strong id="organizerCode">--------</strong>
+            <p>
+              Questo codice sarà utilizzabile dai partecipanti dopo
+              l'attivazione.
+            </p>
+            <div class="organizerActions">
+              <button id="copyLinkBtn" class="btn">Copia link invito</button
+              ><button id="copyCodeBtn" class="btn">Copia codice</button
+              ><button id="advanceStatusBtn" class="btn">Gestisci stato</button
+              ><button id="finaleBtn" class="btn hidden">Apri il finale</button>
+            </div>
+          </div>
+          <button
+            id="checkoutBtn"
+            class="btn primary full hidden"
+            style="margin-top: 18px"
+          >
+            Sblocca l'evento completo — 19,99 €
+          </button>
+        </div>
+        <div class="filters" id="filters">
+          <button class="btn primary" data-filter="Tutte">Tutte</button
+          ><button class="btn" data-filter="Social">Social</button
+          ><button class="btn" data-filter="Coraggio">Coraggio</button
+          ><button class="btn" data-filter="Creatività">Creatività</button
+          ><button class="btn" data-filter="Squadra">Squadra</button
+          ><button id="galleryBtn" class="btn" data-filter="__gallery">
+            Ricordi
+          </button>
+        </div>
+        <div id="questList"></div>
+        <div id="gallery" class="gallery hidden"></div>
+      </div>
+    </section>
 
-  <section id="game" class="view hidden"><div class="gameWrap"><header class="appHead"><div class="brand"><span class="brandMark">Q</span><span>THE LAST QUEST</span></div><button class="btn ghost" onclick="showView('landing')">Esci</button></header><div class="gameHero"><div class="eyebrow" id="gameType">DEMO · ADDIO</div><h1 id="gameTitle">L'ultima quest di Luca</h1><div class="scoreLine"><strong><span id="score">0</span> PT</strong><span id="doneCount">0/8 prove</span></div><div class="meter"><span id="scoreBar" style="width:0"></span></div><div id="organizerCard" class="organizerCard hidden"><div class="eyebrow">Pannello organizzatore</div><span id="eventStatus" class="statusPill">BOZZA</span><strong id="organizerCode">--------</strong><p>Questo codice sarà utilizzabile dai partecipanti dopo l'attivazione.</p><div class="organizerActions"><button id="copyLinkBtn" class="btn">Copia link invito</button><button id="copyCodeBtn" class="btn">Copia codice</button><button id="advanceStatusBtn" class="btn">Gestisci stato</button><button id="finaleBtn" class="btn hidden">Apri il finale</button></div></div><button id="checkoutBtn" class="btn primary full hidden" style="margin-top:18px">Sblocca l'evento completo — 19,99 €</button></div><div class="filters" id="filters"><button class="btn primary" data-filter="Tutte">Tutte</button><button class="btn" data-filter="Social">Social</button><button class="btn" data-filter="Coraggio">Coraggio</button><button class="btn" data-filter="Creatività">Creatività</button><button class="btn" data-filter="Squadra">Squadra</button><button id="galleryBtn" class="btn" data-filter="__gallery">Ricordi</button></div><div id="questList"></div><div id="gallery" class="gallery hidden"></div></div></section>
-
-  <section id="finale" class="view hidden"><div class="shell"><header class="appHead"><button class="btn ghost" onclick="showView('game')">← Torna all'evento</button><div class="brand"><span class="brandMark">Q</span><span>QUEST COMPLETATA</span></div></header><div id="finalCard" class="finalCard"><div>THE LAST QUEST CERTIFICA CHE</div><h1 id="finalTitle">La quest è stata completata</h1><p>Il gruppo ha affrontato missioni, raccolto prove e trasformato un evento in una storia da ricordare.</p><div id="finalScore" class="finalScore">0 PT</div><p id="finalDetails">0 missioni completate</p></div><button class="btn primary full" style="margin-top:20px" onclick="window.print()">Stampa o salva in PDF</button></div></section>
-  <div id="toast" class="toast hidden"></div>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"></script>
-  <script>
-    const SUPABASE_URL='https://bkrikytmzqlpoamoheeg.supabase.co';
-    const SUPABASE_PUBLISHABLE_KEY='sb_publishable_mED53eNUtEZJWipLBKt2iw_Jqyh2ffr';
-    const db=window.supabase?.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
-    const views=['landing','creator','join','account','game','finale'];
-    const demoQuests=[
-      {id:1,cat:'Social',pts:10,title:'Il titolo perfetto',desc:'Fatevi dare da tre sconosciuti un soprannome ufficiale per il protagonista.'},
-      {id:2,cat:'Creatività',pts:15,title:'Copertina dell’album',desc:'Ricreate una copertina musicale coinvolgendo almeno quattro persone.'},
-      {id:3,cat:'Coraggio',pts:20,title:'Il discorso improvvisato',desc:'Un discorso solenne di 45 secondi su un oggetto scelto dal gruppo.'},
-      {id:4,cat:'Squadra',pts:15,title:'Sincronia perfetta',desc:'Registrate una coreografia di gruppo senza fare prove.'},
-      {id:5,cat:'Social',pts:10,title:'Consiglio dal futuro',desc:'Chiedete a una persona più grande un consiglio per il protagonista.'},
-      {id:6,cat:'Creatività',pts:20,title:'Spot dell’anno',desc:'Create uno spot di 20 secondi che presenti il protagonista come una leggenda.'},
-      {id:7,cat:'Coraggio',pts:15,title:'Karaoke senza musica',desc:'Cantate insieme un ritornello famoso senza alcuna base musicale.'},
-      {id:8,cat:'Squadra',pts:25,title:'La prova finale',desc:'Una foto di gruppo memorabile con una posa mai vista prima.'}
-    ];
-    let selectedType='Addio',filter='Tutte',completed=new Set(),currentEventId=null,currentRealtimeChannel=null,proofCounts=new Map(),currentIsAdmin=false,currentEventStatus='DRAFT',currentMedia=[];
-    function showView(id){views.forEach(v=>document.getElementById(v).classList.toggle('hidden',v!==id));window.scrollTo(0,0)}
-    function startCreator(){showView('creator')}
-    async function openMyEvents(){showView('account');const list=document.getElementById('eventList');list.innerHTML='<div class="panel">Carico gli eventi…</div>';try{const session=await ensureAnonymousSession();const {data,error}=await db.from('events').select('id,name,event_type,status,purchase_status,join_code,created_at').eq('owner_user_id',session.user.id).order('created_at',{ascending:false});if(error)throw error;if(!data?.length){list.innerHTML='<div class="panel">Non hai ancora creato eventi su questo dispositivo.</div>';return}list.innerHTML=data.map(event=>`<article class="eventRow"><div><span class="statusPill">${safe(event.status)}</span><h3>${safe(event.name)}</h3><p>${safe(event.event_type.replaceAll('_',' '))} · Codice ${safe(event.join_code)} · ${event.purchase_status==='paid'?'Pagato':'Da attivare'}</p></div><button class="btn primary" onclick='resumeEvent(${JSON.stringify(event.id)})'>Apri</button></article>`).join('')}catch(err){console.error(err);list.innerHTML='<div class="panel">Non riesco a recuperare gli eventi. Riprova tra poco.</div>'}}
-    async function resumeEvent(eventId){try{await ensureAnonymousSession();await loadRemoteEvent(eventId);showView('game')}catch(err){console.error(err);toast('Evento non disponibile')}}
-    function openDemo(){currentEventId=null;currentIsAdmin=false;if(currentRealtimeChannel){db.removeChannel(currentRealtimeChannel);currentRealtimeChannel=null}document.getElementById('eventCode').value='DEMO26';document.getElementById('checkoutBtn').classList.add('hidden');document.getElementById('organizerCard').classList.add('hidden');showView('join')}
-    function safe(v){return String(v||'').replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]))}
-    function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.remove('hidden');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.classList.add('hidden'),2200)}
-    document.querySelectorAll('#eventChoices .choice').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#eventChoices .choice').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');selectedType=btn.dataset.value;updatePreview()}));
-    ['eventName','tone'].forEach(id=>document.getElementById(id).addEventListener('input',updatePreview));
-    function updatePreview(){const icons={Addio:'🥂',Compleanno:'🎂',Laurea:'🎓',Viaggio:'✈️'};document.getElementById('previewType').textContent=`${icons[selectedType]} ${selectedType.toUpperCase()}`;document.getElementById('previewTitle').textContent=document.getElementById('eventName').value||'La tua ultima quest';document.getElementById('previewCopy').textContent=`Missioni ${document.getElementById('tone').value.toLowerCase()} per un evento che il gruppo non dimenticherà.`}
-    const typeMap={Addio:'bachelor_party',Compleanno:'birthday',Laurea:'graduation',Viaggio:'trip'};
-    async function ensureAnonymousSession(){if(!db)throw new Error('Servizio non disponibile');const {data:{session}}=await db.auth.getSession();if(session)return session;const {data,error}=await db.auth.signInAnonymously();if(error)throw error;return data.session}
-    async function createRemoteDraft(data){await ensureAnonymousSession();const {data:created,error}=await db.rpc('create_event',{event_name:data.title,selected_event_type:typeMap[data.type]||'other',protagonist_name:data.hero,selected_tone:data.tone,selected_duration:data.duration});if(error)throw error;const event=created?.[0];if(!event?.event_id)throw new Error('Evento non creato');const generated=await db.rpc('generate_event_missions',{target_event:event.event_id});if(generated.error)throw generated.error;return {...event,mission_count:generated.data}}
-    async function loadRemoteEvent(eventId){const {data:{user}}=await db.auth.getUser();const [eventResult,missionResult,completionResult,mediaResult,participantResult]=await Promise.all([db.from('events').select('name,event_type,status,purchase_status,join_code').eq('id',eventId).single(),db.from('missions').select('id,category,points,title,description,status').eq('event_id',eventId).neq('status','deleted').order('created_at'),db.from('mission_completions').select('mission_id,status').eq('event_id',eventId),db.from('mission_media').select('id,mission_id,media_type,storage_path,file_name,created_at').eq('event_id',eventId).order('created_at',{ascending:false}),db.from('participants').select('role').eq('event_id',eventId).eq('auth_user_id',user?.id||'').maybeSingle()]);if(eventResult.error)throw eventResult.error;currentEventId=eventId;currentEventStatus=eventResult.data.status;currentIsAdmin=participantResult.data?.role==='admin';currentMedia=mediaResult.data||[];document.getElementById('gameTitle').textContent=eventResult.data.name;document.getElementById('gameType').textContent=eventResult.data.event_type.replaceAll('_',' ').toUpperCase();document.getElementById('eventStatus').textContent=currentEventStatus;document.getElementById('organizerCode').textContent=eventResult.data.join_code;document.getElementById('organizerCard').classList.toggle('hidden',!currentIsAdmin);document.getElementById('checkoutBtn').classList.toggle('hidden',!currentIsAdmin||eventResult.data.purchase_status==='paid');document.getElementById('checkoutBtn').dataset.eventId=eventId;document.getElementById('finaleBtn').classList.toggle('hidden',!['COMPLETED','MEMORY'].includes(currentEventStatus));if(missionResult.data?.length){demoQuests.splice(0,demoQuests.length,...missionResult.data.map((m,i)=>({id:m.id,cat:m.category||'Quest',pts:m.points,title:m.title,desc:m.description,status:m.status,order:i})));completed=new Set((completionResult.data||[]).filter(c=>c.status==='completed').map(c=>c.mission_id));proofCounts=new Map();currentMedia.forEach(x=>proofCounts.set(x.mission_id,(proofCounts.get(x.mission_id)||0)+1))}renderQuests();subscribeRealtime(eventId)}
-    async function refreshRemoteProgress(){if(!currentEventId)return;const [completionResult,mediaResult]=await Promise.all([db.from('mission_completions').select('mission_id,status').eq('event_id',currentEventId),db.from('mission_media').select('id,mission_id,media_type,storage_path,file_name,created_at').eq('event_id',currentEventId).order('created_at',{ascending:false})]);completed=new Set((completionResult.data||[]).filter(c=>c.status==='completed').map(c=>c.mission_id));currentMedia=mediaResult.data||[];proofCounts=new Map();currentMedia.forEach(x=>proofCounts.set(x.mission_id,(proofCounts.get(x.mission_id)||0)+1));if(filter==='__gallery')renderGallery();else renderQuests()}
-    function subscribeRealtime(eventId){if(currentRealtimeChannel)db.removeChannel(currentRealtimeChannel);currentRealtimeChannel=db.channel(`event:${eventId}`).on('postgres_changes',{event:'*',schema:'public',table:'mission_completions',filter:`event_id=eq.${eventId}`},refreshRemoteProgress).on('postgres_changes',{event:'*',schema:'public',table:'mission_media',filter:`event_id=eq.${eventId}`},refreshRemoteProgress).subscribe()}
-    document.getElementById('createForm').addEventListener('submit',async e=>{e.preventDefault();const btn=e.submitter;const data={type:selectedType,title:document.getElementById('eventName').value,hero:document.getElementById('heroName').value,tone:document.getElementById('tone').value,duration:document.getElementById('duration').value};localStorage.setItem('tlqDraft',JSON.stringify(data));btn.disabled=true;btn.textContent='Creo la tua quest…';try{const remote=await createRemoteDraft(data);localStorage.setItem('tlqRemoteDraft',JSON.stringify(remote||{}));completed=new Set();await loadRemoteEvent(remote.event_id);document.getElementById('gameType').textContent=`ANTEPRIMA · ${data.type.toUpperCase()}`;document.getElementById('organizerCode').textContent=remote.join_code;document.getElementById('organizerCard').classList.remove('hidden');const checkout=document.getElementById('checkoutBtn');checkout.dataset.eventId=remote.event_id;checkout.classList.remove('hidden');showView('game');toast(`${remote.mission_count} missioni create · codice ${remote.join_code}`)}catch(err){console.error(err);document.getElementById('gameType').textContent=`ANTEPRIMA · ${data.type.toUpperCase()}`;document.getElementById('gameTitle').textContent=data.title;document.getElementById('checkoutBtn').classList.add('hidden');document.getElementById('organizerCard').classList.add('hidden');renderQuests();showView('game');toast('Anteprima locale pronta; salvataggio online da riprovare')}finally{btn.disabled=false;btn.textContent="Genera l'anteprima"}});
-    document.getElementById('joinForm').addEventListener('submit',async e=>{e.preventDefault();const btn=e.submitter,code=document.getElementById('eventCode').value.trim().toUpperCase(),name=document.getElementById('participantName').value.trim();document.getElementById('checkoutBtn').classList.add('hidden');if(code==='DEMO26'){currentEventId=null;currentIsAdmin=false;if(currentRealtimeChannel){db.removeChannel(currentRealtimeChannel);currentRealtimeChannel=null}document.getElementById('gameType').textContent='DEMO · ADDIO';document.getElementById('gameTitle').textContent="L'ultima quest di Luca";completed=new Set();proofCounts=new Map();renderQuests();showView('game');return}btn.disabled=true;btn.textContent='Ingresso…';try{await ensureAnonymousSession();const {data,error}=await db.rpc('join_event_by_code',{event_code:code,participant_name:name});if(error)throw error;await loadRemoteEvent(data?.[0]?.event_id);showView('game')}catch(err){console.error(err);toast('Evento non trovato o non ancora attivo')}finally{btn.disabled=false;btn.textContent="Entra nell'evento"}});
-    document.getElementById('checkoutBtn').addEventListener('click',async e=>{const btn=e.currentTarget,eventId=btn.dataset.eventId;if(!eventId)return;btn.disabled=true;btn.textContent='Apro il pagamento sicuro…';try{const {data:{session}}=await db.auth.getSession();if(!session)throw new Error('Sessione scaduta');const response=await fetch('/api/create-checkout',{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${session.access_token}`},body:JSON.stringify({eventId})});const result=await response.json();if(!response.ok||!result.url)throw new Error(result.error||'Pagamento non disponibile');location.href=result.url}catch(err){console.error(err);toast(err.message||'Pagamento non disponibile');btn.disabled=false;btn.textContent="Sblocca l'evento completo — 19,99 €"}});
-    document.getElementById('copyCodeBtn').addEventListener('click',async()=>{const code=document.getElementById('organizerCode').textContent;await navigator.clipboard.writeText(code);toast('Codice copiato')});
-    document.getElementById('copyLinkBtn').addEventListener('click',async()=>{const code=document.getElementById('organizerCode').textContent;await navigator.clipboard.writeText(`${location.origin}/e/${code}`);toast('Link invito copiato')});
-    document.getElementById('advanceStatusBtn').addEventListener('click',async()=>{if(!currentEventId||!currentIsAdmin)return;const next={DRAFT:'READY',READY:'ACTIVE',ACTIVE:'COMPLETED',COMPLETED:'MEMORY'}[currentEventStatus];if(!next){toast('L’evento è già archiviato');return}const labels={READY:'rendere pronto',ACTIVE:'avviare',COMPLETED:'concludere',MEMORY:'archiviare nei ricordi'};if(!confirm(`Vuoi ${labels[next]} questo evento?`))return;const {data,error}=await db.rpc('set_event_status',{target_event:currentEventId,new_status:next});if(error){toast(currentEventStatus==='DRAFT'?'Completa prima il pagamento':'Cambio stato non riuscito');return}currentEventStatus=data;document.getElementById('eventStatus').textContent=data;document.getElementById('finaleBtn').classList.toggle('hidden',!['COMPLETED','MEMORY'].includes(data));toast(`Stato aggiornato: ${data}`)});
-    document.getElementById('finaleBtn').addEventListener('click',()=>{const active=demoQuests.filter(q=>(q.status||'active')==='active'),score=active.filter(q=>completed.has(q.id)).reduce((sum,q)=>sum+q.pts,0);document.getElementById('finalTitle').textContent=document.getElementById('gameTitle').textContent;document.getElementById('finalScore').textContent=`${score} PT`;document.getElementById('finalDetails').textContent=`${active.filter(q=>completed.has(q.id)).length} missioni completate · ${currentMedia.length} ricordi raccolti`;showView('finale')});
-    document.getElementById('filters').addEventListener('click',e=>{const btn=e.target.closest('button');if(!btn)return;filter=btn.dataset.filter;document.querySelectorAll('#filters .btn').forEach(x=>x.classList.toggle('primary',x===btn));if(filter==='__gallery')renderGallery();else{document.getElementById('gallery').classList.add('hidden');document.getElementById('questList').classList.remove('hidden');renderQuests()}});
-    async function toggleQuest(id){if(currentEventId&&typeof id==='string'){const previous=completed.has(id);previous?completed.delete(id):completed.add(id);renderQuests();const {error}=await db.rpc('toggle_mission',{target_mission:id});if(error){previous?completed.add(id):completed.delete(id);renderQuests();toast('Aggiornamento non riuscito');return}toast(previous?'Missione riaperta':'Missione completata!');return}completed.has(id)?completed.delete(id):completed.add(id);renderQuests();toast(completed.has(id)?'Missione completata!':'Missione riaperta')}
-    async function uploadProof(missionId,input){const file=input.files?.[0];if(!file||!currentEventId)return;if(file.size>52428800){toast('Il file supera 50 MB');input.value='';return}const allowed=['image/jpeg','image/png','image/webp','video/mp4','video/webm'];if(!allowed.includes(file.type)){toast('Formato non supportato');input.value='';return}input.disabled=true;try{const {data:{user}}=await db.auth.getUser();if(!user)throw new Error('Sessione scaduta');const ext=(file.name.split('.').pop()||'bin').replace(/[^a-z0-9]/gi,'').toLowerCase();const path=`${currentEventId}/${user.id}/${crypto.randomUUID()}.${ext}`;const uploaded=await db.storage.from('mission-proofs').upload(path,file,{contentType:file.type,upsert:false});if(uploaded.error)throw uploaded.error;const row=await db.from('mission_media').insert({event_id:currentEventId,mission_id:missionId,uploaded_by:user.id,media_type:file.type.startsWith('video/')?'video':'photo',storage_path:path,file_name:file.name,mime_type:file.type,file_size:file.size});if(row.error){await db.storage.from('mission-proofs').remove([path]);throw row.error}toast('Prova caricata');await refreshRemoteProgress()}catch(err){console.error(err);toast('Caricamento non riuscito')}finally{input.disabled=false;input.value=''}}
-    async function editMission(id){const q=demoQuests.find(x=>x.id===id);if(!q||!currentIsAdmin)return;const title=prompt('Titolo missione',q.title);if(title===null)return;const desc=prompt('Descrizione',q.desc);if(desc===null)return;const points=Number(prompt('Punti (1–50)',String(q.pts)));if(!Number.isInteger(points)||points<1||points>50){toast('Punteggio non valido');return}const active=confirm('Premi OK per lasciare la missione attiva. Annulla per disattivarla.');const {error}=await db.rpc('update_event_mission',{target_mission:id,new_title:title,new_description:desc,new_points:points,new_status:active?'active':'inactive'});if(error){toast('Modifica non riuscita');return}q.title=title.trim();q.desc=desc.trim();q.pts=points;q.status=active?'active':'inactive';renderQuests();toast('Missione aggiornata')}
-    async function renderGallery(){document.getElementById('questList').classList.add('hidden');const gallery=document.getElementById('gallery');gallery.classList.remove('hidden');if(!currentMedia.length){gallery.innerHTML='<div class="panel" style="grid-column:1/-1">Nessuna prova caricata per ora.</div>';return}gallery.innerHTML='<div class="panel" style="grid-column:1/-1">Carico i ricordi…</div>';const signed=await Promise.all(currentMedia.map(async item=>{const result=await db.storage.from('mission-proofs').createSignedUrl(item.storage_path,900);return {...item,url:result.data?.signedUrl}}));gallery.innerHTML=signed.filter(x=>x.url).map(item=>`<article class="galleryItem">${item.media_type==='video'?`<video src="${safe(item.url)}" controls preload="metadata"></video>`:`<img src="${safe(item.url)}" alt="Prova della missione" loading="lazy">`}<span>${safe(item.file_name)}</span></article>`).join('')||'<div class="panel" style="grid-column:1/-1">Non riesco a caricare i ricordi.</div>'}
-    function renderQuests(){const list=demoQuests.filter(q=>(q.status||'active')==='active'&&(filter==='Tutte'||q.cat===filter));document.getElementById('questList').innerHTML=list.map(q=>{const key=JSON.stringify(q.id),proofs=proofCounts.get(q.id)||0,number=typeof q.id==='number'?String(q.id).padStart(2,'0'):String((q.order??0)+1).padStart(2,'0');return `<article class="quest ${completed.has(q.id)?'done':''}"><div class="questTop"><span>${safe(q.cat.toUpperCase())} · #${number}</span><span>+${q.pts} PT</span></div><h3>${safe(q.title)}</h3><p>${safe(q.desc)}</p><div class="questActions"><button class="btn ${completed.has(q.id)?'':'primary'}" onclick='toggleQuest(${key})'>${completed.has(q.id)?'✓ Completata':'Convalida prova'}</button><label class="btn" style="margin:0">📷 ${proofs?`${proofs} prove`:'Prova'}<input class="hidden" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" onchange='uploadProof(${key},this)' ${currentEventId?'':'disabled'}></label>${currentIsAdmin&&typeof q.id==='string'?`<button class="btn" onclick='editMission(${key})'>Modifica</button>`:''}</div></article>`}).join('');const activeQuests=demoQuests.filter(q=>(q.status||'active')==='active');const score=activeQuests.filter(q=>completed.has(q.id)).reduce((s,q)=>s+q.pts,0);document.getElementById('score').textContent=score;document.getElementById('doneCount').textContent=`${activeQuests.filter(q=>completed.has(q.id)).length}/${activeQuests.length} prove`;document.getElementById('scoreBar').style.width=`${Math.min(100,score/130*100)}%`}
-    const params=new URLSearchParams(location.search);if(params.get('payment')==='success')toast('Pagamento confermato: evento attivato');if(params.get('payment')==='cancelled')toast('Pagamento annullato: la bozza è ancora disponibile');const path=location.pathname; if(path.startsWith('/e/')){document.getElementById('eventCode').value=path.split('/').filter(Boolean).pop().toUpperCase();showView('join')}else if(path==='/crea')startCreator();renderQuests();
-  </script>
-</body>
+    <section id="finale" class="view hidden">
+      <div class="shell">
+        <header class="appHead">
+          <button class="btn ghost" onclick="showView('game')">
+            ← Torna all'evento
+          </button>
+          <div class="brand">
+            <span class="brandMark">Q</span><span>QUEST COMPLETATA</span>
+          </div>
+        </header>
+        <div id="finalCard" class="finalCard">
+          <div>THE LAST QUEST CERTIFICA CHE</div>
+          <h1 id="finalTitle">La quest è stata completata</h1>
+          <p>
+            Il gruppo ha affrontato missioni, raccolto prove e trasformato un
+            evento in una storia da ricordare.
+          </p>
+          <div id="finalScore" class="finalScore">0 PT</div>
+          <p id="finalDetails">0 missioni completate</p>
+        </div>
+        <button
+          class="btn primary full"
+          style="margin-top: 20px"
+          onclick="window.print()"
+        >
+          Stampa o salva in PDF
+        </button>
+      </div>
+    </section>
+    <div id="toast" class="toast hidden"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"></script>
+    <script>
+      const SUPABASE_URL = "https://bkrikytmzqlpoamoheeg.supabase.co";
+      const SUPABASE_PUBLISHABLE_KEY =
+        "sb_publishable_mED53eNUtEZJWipLBKt2iw_Jqyh2ffr";
+      const db = window.supabase?.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY,
+      );
+      const views = ["landing", "creator", "join", "account", "game", "finale"];
+      const demoQuests = [
+        {
+          id: 1,
+          cat: "Social",
+          pts: 10,
+          title: "Il titolo perfetto",
+          desc: "Fatevi dare da tre sconosciuti un soprannome ufficiale per il protagonista.",
+        },
+        {
+          id: 2,
+          cat: "Creatività",
+          pts: 15,
+          title: "Copertina dell’album",
+          desc: "Ricreate una copertina musicale coinvolgendo almeno quattro persone.",
+        },
+        {
+          id: 3,
+          cat: "Coraggio",
+          pts: 20,
+          title: "Il discorso improvvisato",
+          desc: "Un discorso solenne di 45 secondi su un oggetto scelto dal gruppo.",
+        },
+        {
+          id: 4,
+          cat: "Squadra",
+          pts: 15,
+          title: "Sincronia perfetta",
+          desc: "Registrate una coreografia di gruppo senza fare prove.",
+        },
+        {
+          id: 5,
+          cat: "Social",
+          pts: 10,
+          title: "Consiglio dal futuro",
+          desc: "Chiedete a una persona più grande un consiglio per il protagonista.",
+        },
+        {
+          id: 6,
+          cat: "Creatività",
+          pts: 20,
+          title: "Spot dell’anno",
+          desc: "Create uno spot di 20 secondi che presenti il protagonista come una leggenda.",
+        },
+        {
+          id: 7,
+          cat: "Coraggio",
+          pts: 15,
+          title: "Karaoke senza musica",
+          desc: "Cantate insieme un ritornello famoso senza alcuna base musicale.",
+        },
+        {
+          id: 8,
+          cat: "Squadra",
+          pts: 25,
+          title: "La prova finale",
+          desc: "Una foto di gruppo memorabile con una posa mai vista prima.",
+        },
+      ];
+      let selectedType = "Addio",
+        filter = "Tutte",
+        completed = new Set(),
+        currentEventId = null,
+        currentRealtimeChannel = null,
+        proofCounts = new Map(),
+        currentIsAdmin = false,
+        currentEventStatus = "DRAFT",
+        currentMedia = [],
+        alcoholCount = 0,
+        targetScore = 100,
+        currentChallengeMode = "classic";
+      function showView(id) {
+        views.forEach((v) =>
+          document.getElementById(v).classList.toggle("hidden", v !== id),
+        );
+        window.scrollTo(0, 0);
+      }
+      function startCreator() {
+        showView("creator");
+      }
+      async function openMyEvents() {
+        showView("account");
+        const list = document.getElementById("eventList");
+        list.innerHTML = '<div class="panel">Carico gli eventi…</div>';
+        try {
+          const session = await ensureAnonymousSession();
+          const { data, error } = await db
+            .from("events")
+            .select(
+              "id,name,event_type,status,purchase_status,join_code,created_at",
+            )
+            .eq("owner_user_id", session.user.id)
+            .order("created_at", { ascending: false });
+          if (error) throw error;
+          if (!data?.length) {
+            list.innerHTML =
+              '<div class="panel">Non hai ancora creato eventi su questo dispositivo.</div>';
+            return;
+          }
+          list.innerHTML = data
+            .map(
+              (event) =>
+                `<article class="eventRow"><div><span class="statusPill">${safe(event.status)}</span><h3>${safe(event.name)}</h3><p>${safe(event.event_type.replaceAll("_", " "))} · Codice ${safe(event.join_code)} · ${event.purchase_status === "paid" ? "Pagato" : "Da attivare"}</p></div><button class="btn primary" onclick='resumeEvent(${JSON.stringify(event.id)})'>Apri</button></article>`,
+            )
+            .join("");
+        } catch (err) {
+          console.error(err);
+          list.innerHTML =
+            '<div class="panel">Non riesco a recuperare gli eventi. Riprova tra poco.</div>';
+        }
+      }
+      async function resumeEvent(eventId) {
+        try {
+          await ensureAnonymousSession();
+          await loadRemoteEvent(eventId);
+          showView("game");
+        } catch (err) {
+          console.error(err);
+          toast("Evento non disponibile");
+        }
+      }
+      function openDemo() {
+        currentEventId = null;
+        currentIsAdmin = false;
+        if (currentRealtimeChannel) {
+          db.removeChannel(currentRealtimeChannel);
+          currentRealtimeChannel = null;
+        }
+        document.getElementById("eventCode").value = "DEMO26";
+        document.getElementById("checkoutBtn").classList.add("hidden");
+        document.getElementById("organizerCard").classList.add("hidden");
+        showView("join");
+      }
+      function safe(v) {
+        return String(v || "").replace(
+          /[<>&"']/g,
+          (c) =>
+            ({
+              "<": "&lt;",
+              ">": "&gt;",
+              "&": "&amp;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
+      }
+      function toast(msg) {
+        const el = document.getElementById("toast");
+        el.textContent = msg;
+        el.classList.remove("hidden");
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => el.classList.add("hidden"), 2200);
+      }
+      document.querySelectorAll("#eventChoices .choice").forEach((btn) =>
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll("#eventChoices .choice")
+            .forEach((x) => x.classList.remove("selected"));
+          btn.classList.add("selected");
+          selectedType = btn.dataset.value;
+          updatePreview();
+        }),
+      );
+      ["eventName", "tone"].forEach((id) =>
+        document.getElementById(id).addEventListener("input", updatePreview),
+      );
+      function updatePreview() {
+        const icons = {
+          Addio: "🥂",
+          Compleanno: "🎂",
+          Laurea: "🎓",
+          Viaggio: "✈️",
+        };
+        document.getElementById("previewType").textContent =
+          `${icons[selectedType]} ${selectedType.toUpperCase()}`;
+        document.getElementById("previewTitle").textContent =
+          document.getElementById("eventName").value || "La tua ultima quest";
+        document.getElementById("previewCopy").textContent =
+          `Missioni ${document.getElementById("tone").value.toLowerCase()} per un evento che il gruppo non dimenticherà.`;
+        document.getElementById("previewGoal").textContent =
+          document.getElementById("tone").value.startsWith("Folle") ? "200" : "100";
+      }
+      const typeMap = {
+        Addio: "bachelor_party",
+        Compleanno: "birthday",
+        Laurea: "graduation",
+        Viaggio: "trip",
+      };
+      async function ensureAnonymousSession() {
+        if (!db) throw new Error("Servizio non disponibile");
+        const {
+          data: { session },
+        } = await db.auth.getSession();
+        if (session) return session;
+        const { data, error } = await db.auth.signInAnonymously();
+        if (error) throw error;
+        return data.session;
+      }
+      async function createRemoteDraft(data) {
+        await ensureAnonymousSession();
+        const { data: created, error } = await db.rpc("create_event", {
+          event_name: data.title,
+          selected_event_type: typeMap[data.type] || "other",
+          protagonist_name: data.hero,
+          selected_tone: data.tone,
+          selected_duration: data.duration,
+        });
+        if (error) throw error;
+        const event = created?.[0];
+        if (!event?.event_id) throw new Error("Evento non creato");
+        const generated = await db.rpc("generate_event_missions", {
+          target_event: event.event_id,
+        });
+        if (generated.error) throw generated.error;
+        return { ...event, mission_count: generated.data };
+      }
+      async function loadRemoteEvent(eventId) {
+        const {
+          data: { user },
+        } = await db.auth.getUser();
+        const [
+          eventResult,
+          missionResult,
+          completionResult,
+          mediaResult,
+          participantResult,
+          counterResult,
+        ] = await Promise.all([
+          db
+            .from("events")
+            .select("name,event_type,status,purchase_status,join_code,target_score,challenge_mode")
+            .eq("id", eventId)
+            .single(),
+          db
+            .from("missions")
+            .select("id,category,points,title,description,status")
+            .eq("event_id", eventId)
+            .neq("status", "deleted")
+            .order("created_at"),
+          db
+            .from("mission_completions")
+            .select("mission_id,status")
+            .eq("event_id", eventId),
+          db
+            .from("mission_media")
+            .select(
+              "id,mission_id,media_type,storage_path,file_name,created_at",
+            )
+            .eq("event_id", eventId)
+            .order("created_at", { ascending: false }),
+          db
+            .from("participants")
+            .select("role")
+            .eq("event_id", eventId)
+            .eq("auth_user_id", user?.id || "")
+            .maybeSingle(),
+          db
+            .from("event_counters")
+            .select("alcohol_count")
+            .eq("event_id", eventId)
+            .maybeSingle(),
+        ]);
+        if (eventResult.error) throw eventResult.error;
+        currentEventId = eventId;
+        currentEventStatus = eventResult.data.status;
+        currentIsAdmin = participantResult.data?.role === "admin";
+        currentMedia = mediaResult.data || [];
+        alcoholCount = counterResult.data?.alcohol_count || 0;
+        targetScore = eventResult.data.target_score || 100;
+        currentChallengeMode = eventResult.data.challenge_mode || "classic";
+        document.getElementById("alcoholCount").textContent = alcoholCount;
+        document.getElementById("gameTitle").textContent =
+          eventResult.data.name;
+        document.getElementById("gameType").textContent =
+          `${eventResult.data.event_type.replaceAll("_", " ").toUpperCase()}${currentChallengeMode === "insane" ? " · MODALITÀ FOLLE" : ""}`;
+        document.getElementById("eventStatus").textContent = currentEventStatus;
+        document.getElementById("organizerCode").textContent =
+          eventResult.data.join_code;
+        document
+          .getElementById("organizerCard")
+          .classList.toggle("hidden", !currentIsAdmin);
+        document
+          .getElementById("checkoutBtn")
+          .classList.toggle(
+            "hidden",
+            !currentIsAdmin || eventResult.data.purchase_status === "paid",
+          );
+        document.getElementById("checkoutBtn").dataset.eventId = eventId;
+        document
+          .getElementById("finaleBtn")
+          .classList.toggle(
+            "hidden",
+            !["COMPLETED", "MEMORY"].includes(currentEventStatus),
+          );
+        if (missionResult.data?.length) {
+          demoQuests.splice(
+            0,
+            demoQuests.length,
+            ...missionResult.data.map((m, i) => ({
+              id: m.id,
+              cat: m.category || "Quest",
+              pts: m.points,
+              title: m.title,
+              desc: m.description,
+              status: m.status,
+              order: i,
+            })),
+          );
+          completed = new Set(
+            (completionResult.data || [])
+              .filter((c) => c.status === "completed")
+              .map((c) => c.mission_id),
+          );
+          proofCounts = new Map();
+          currentMedia.forEach((x) =>
+            proofCounts.set(
+              x.mission_id,
+              (proofCounts.get(x.mission_id) || 0) + 1,
+            ),
+          );
+        }
+        renderQuests();
+        subscribeRealtime(eventId);
+      }
+      async function refreshRemoteProgress() {
+        if (!currentEventId) return;
+        const [completionResult, mediaResult, counterResult] = await Promise.all([
+          db
+            .from("mission_completions")
+            .select("mission_id,status")
+            .eq("event_id", currentEventId),
+          db
+            .from("mission_media")
+            .select(
+              "id,mission_id,media_type,storage_path,file_name,created_at",
+            )
+            .eq("event_id", currentEventId)
+            .order("created_at", { ascending: false }),
+          db
+            .from("event_counters")
+            .select("alcohol_count")
+            .eq("event_id", currentEventId)
+            .maybeSingle(),
+        ]);
+        completed = new Set(
+          (completionResult.data || [])
+            .filter((c) => c.status === "completed")
+            .map((c) => c.mission_id),
+        );
+        currentMedia = mediaResult.data || [];
+        alcoholCount = counterResult.data?.alcohol_count || 0;
+        document.getElementById("alcoholCount").textContent = alcoholCount;
+        proofCounts = new Map();
+        currentMedia.forEach((x) =>
+          proofCounts.set(
+            x.mission_id,
+            (proofCounts.get(x.mission_id) || 0) + 1,
+          ),
+        );
+        if (filter === "__gallery") renderGallery();
+        else renderQuests();
+      }
+      function subscribeRealtime(eventId) {
+        if (currentRealtimeChannel) db.removeChannel(currentRealtimeChannel);
+        currentRealtimeChannel = db
+          .channel(`event:${eventId}`)
+          .on(
+            "postgres_changes",
+            {
+              event: "*",
+              schema: "public",
+              table: "mission_completions",
+              filter: `event_id=eq.${eventId}`,
+            },
+            refreshRemoteProgress,
+          )
+          .on(
+            "postgres_changes",
+            {
+              event: "*",
+              schema: "public",
+              table: "mission_media",
+              filter: `event_id=eq.${eventId}`,
+            },
+            refreshRemoteProgress,
+          )
+          .on(
+            "postgres_changes",
+            {
+              event: "*",
+              schema: "public",
+              table: "event_counters",
+              filter: `event_id=eq.${eventId}`,
+            },
+            refreshRemoteProgress,
+          )
+          .subscribe();
+      }
+      document
+        .getElementById("createForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const btn = e.submitter;
+          const data = {
+            type: selectedType,
+            title: document.getElementById("eventName").value,
+            hero: document.getElementById("heroName").value,
+            tone: document.getElementById("tone").value,
+            duration: document.getElementById("duration").value,
+          };
+          localStorage.setItem("tlqDraft", JSON.stringify(data));
+          btn.disabled = true;
+          btn.textContent = "Creo la tua quest…";
+          try {
+            const remote = await createRemoteDraft(data);
+            localStorage.setItem(
+              "tlqRemoteDraft",
+              JSON.stringify(remote || {}),
+            );
+            completed = new Set();
+            await loadRemoteEvent(remote.event_id);
+            document.getElementById("gameType").textContent =
+              `ANTEPRIMA · ${data.type.toUpperCase()}`;
+            document.getElementById("organizerCode").textContent =
+              remote.join_code;
+            document.getElementById("organizerCard").classList.remove("hidden");
+            const checkout = document.getElementById("checkoutBtn");
+            checkout.dataset.eventId = remote.event_id;
+            checkout.classList.remove("hidden");
+            showView("game");
+            toast(
+              `${remote.mission_count} missioni create · codice ${remote.join_code}`,
+            );
+          } catch (err) {
+            console.error(err);
+            document.getElementById("gameType").textContent =
+              `ANTEPRIMA · ${data.type.toUpperCase()}`;
+            document.getElementById("gameTitle").textContent = data.title;
+            document.getElementById("checkoutBtn").classList.add("hidden");
+            document.getElementById("organizerCard").classList.add("hidden");
+            renderQuests();
+            showView("game");
+            toast("Anteprima locale pronta; salvataggio online da riprovare");
+          } finally {
+            btn.disabled = false;
+            btn.textContent = "Genera l'anteprima";
+          }
+        });
+      document
+        .getElementById("joinForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const btn = e.submitter,
+            code = document
+              .getElementById("eventCode")
+              .value.trim()
+              .toUpperCase(),
+            name = document.getElementById("participantName").value.trim();
+          document.getElementById("checkoutBtn").classList.add("hidden");
+          if (code === "DEMO26") {
+            currentEventId = null;
+            currentIsAdmin = false;
+            if (currentRealtimeChannel) {
+              db.removeChannel(currentRealtimeChannel);
+              currentRealtimeChannel = null;
+            }
+            document.getElementById("gameType").textContent = "DEMO · ADDIO";
+            document.getElementById("gameTitle").textContent =
+              "L'ultima quest di Luca";
+            completed = new Set();
+            proofCounts = new Map();
+            alcoholCount = 0;
+            targetScore = 100;
+            currentChallengeMode = "classic";
+            renderQuests();
+            showView("game");
+            return;
+          }
+          btn.disabled = true;
+          btn.textContent = "Ingresso…";
+          try {
+            await ensureAnonymousSession();
+            const { data, error } = await db.rpc("join_event_by_code", {
+              event_code: code,
+              participant_name: name,
+            });
+            if (error) throw error;
+            await loadRemoteEvent(data?.[0]?.event_id);
+            showView("game");
+          } catch (err) {
+            console.error(err);
+            toast("Evento non trovato o non ancora attivo");
+          } finally {
+            btn.disabled = false;
+            btn.textContent = "Entra nell'evento";
+          }
+        });
+      document
+        .getElementById("checkoutBtn")
+        .addEventListener("click", async (e) => {
+          const btn = e.currentTarget,
+            eventId = btn.dataset.eventId;
+          if (!eventId) return;
+          btn.disabled = true;
+          btn.textContent = "Apro il pagamento sicuro…";
+          try {
+            const {
+              data: { session },
+            } = await db.auth.getSession();
+            if (!session) throw new Error("Sessione scaduta");
+            const response = await fetch("/api/create-checkout", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${session.access_token}`,
+              },
+              body: JSON.stringify({ eventId }),
+            });
+            const result = await response.json();
+            if (!response.ok || !result.url)
+              throw new Error(result.error || "Pagamento non disponibile");
+            location.href = result.url;
+          } catch (err) {
+            console.error(err);
+            toast(err.message || "Pagamento non disponibile");
+            btn.disabled = false;
+            btn.textContent = "Sblocca l'evento completo — 19,99 €";
+          }
+        });
+      document
+        .getElementById("copyCodeBtn")
+        .addEventListener("click", async () => {
+          const code = document.getElementById("organizerCode").textContent;
+          await navigator.clipboard.writeText(code);
+          toast("Codice copiato");
+        });
+      document
+        .getElementById("copyLinkBtn")
+        .addEventListener("click", async () => {
+          const code = document.getElementById("organizerCode").textContent;
+          await navigator.clipboard.writeText(`${location.origin}/e/${code}`);
+          toast("Link invito copiato");
+        });
+      document
+        .getElementById("advanceStatusBtn")
+        .addEventListener("click", async () => {
+          if (!currentEventId || !currentIsAdmin) return;
+          const next = {
+            DRAFT: "READY",
+            READY: "ACTIVE",
+            ACTIVE: "COMPLETED",
+            COMPLETED: "MEMORY",
+          }[currentEventStatus];
+          if (!next) {
+            toast("L’evento è già archiviato");
+            return;
+          }
+          const labels = {
+            READY: "rendere pronto",
+            ACTIVE: "avviare",
+            COMPLETED: "concludere",
+            MEMORY: "archiviare nei ricordi",
+          };
+          if (!confirm(`Vuoi ${labels[next]} questo evento?`)) return;
+          const { data, error } = await db.rpc("set_event_status", {
+            target_event: currentEventId,
+            new_status: next,
+          });
+          if (error) {
+            toast(
+              currentEventStatus === "DRAFT"
+                ? "Completa prima il pagamento"
+                : "Cambio stato non riuscito",
+            );
+            return;
+          }
+          currentEventStatus = data;
+          document.getElementById("eventStatus").textContent = data;
+          document
+            .getElementById("finaleBtn")
+            .classList.toggle(
+              "hidden",
+              !["COMPLETED", "MEMORY"].includes(data),
+            );
+          toast(`Stato aggiornato: ${data}`);
+        });
+      document.getElementById("finaleBtn").addEventListener("click", () => {
+        const active = demoQuests.filter(
+            (q) => (q.status || "active") === "active",
+          ),
+          missionScore = active
+            .filter((q) => completed.has(q.id))
+            .reduce((sum, q) => sum + q.pts, 0),
+          score = missionScore + alcoholCount;
+        document.getElementById("finalTitle").textContent =
+          document.getElementById("gameTitle").textContent;
+        document.getElementById("finalScore").textContent = `${score} PT`;
+        document.getElementById("finalDetails").textContent =
+          `${missionScore} PT dalle missioni · ${alcoholCount} PT etilometro · obiettivo ${targetScore} PT · ${currentMedia.length} ricordi`;
+        showView("finale");
+      });
+      async function changeAlcohol(delta) {
+        if (!currentEventId) {
+          alcoholCount = Math.max(0, alcoholCount + delta);
+          renderQuests();
+          return;
+        }
+        if (delta < 0 && !currentIsAdmin) {
+          toast("Solo l’organizzatore può correggere il conteggio");
+          return;
+        }
+        const { data, error } = await db.rpc("change_alcohol_count", {
+          target_event: currentEventId,
+          change_by: delta,
+        });
+        if (error) {
+          toast("Etilometro non aggiornato");
+          return;
+        }
+        alcoholCount = data;
+        renderQuests();
+        toast(delta > 0 ? "+1 PT dall’etilometro" : "Conteggio corretto");
+      }
+      document.getElementById("alcoholPlus").addEventListener("click", () => changeAlcohol(1));
+      document.getElementById("alcoholMinus").addEventListener("click", () => changeAlcohol(-1));
+      document.getElementById("filters").addEventListener("click", (e) => {
+        const btn = e.target.closest("button");
+        if (!btn) return;
+        filter = btn.dataset.filter;
+        document
+          .querySelectorAll("#filters .btn")
+          .forEach((x) => x.classList.toggle("primary", x === btn));
+        if (filter === "__gallery") renderGallery();
+        else {
+          document.getElementById("gallery").classList.add("hidden");
+          document.getElementById("questList").classList.remove("hidden");
+          renderQuests();
+        }
+      });
+      async function toggleQuest(id) {
+        if (currentEventId && typeof id === "string") {
+          const previous = completed.has(id);
+          previous ? completed.delete(id) : completed.add(id);
+          renderQuests();
+          const { error } = await db.rpc("toggle_mission", {
+            target_mission: id,
+          });
+          if (error) {
+            previous ? completed.add(id) : completed.delete(id);
+            renderQuests();
+            toast("Aggiornamento non riuscito");
+            return;
+          }
+          toast(previous ? "Missione riaperta" : "Missione completata!");
+          return;
+        }
+        completed.has(id) ? completed.delete(id) : completed.add(id);
+        renderQuests();
+        toast(completed.has(id) ? "Missione completata!" : "Missione riaperta");
+      }
+      async function uploadProof(missionId, input) {
+        const file = input.files?.[0];
+        if (!file || !currentEventId) return;
+        if (file.size > 52428800) {
+          toast("Il file supera 50 MB");
+          input.value = "";
+          return;
+        }
+        const allowed = [
+          "image/jpeg",
+          "image/png",
+          "image/webp",
+          "video/mp4",
+          "video/webm",
+        ];
+        if (!allowed.includes(file.type)) {
+          toast("Formato non supportato");
+          input.value = "";
+          return;
+        }
+        input.disabled = true;
+        try {
+          const {
+            data: { user },
+          } = await db.auth.getUser();
+          if (!user) throw new Error("Sessione scaduta");
+          const ext = (file.name.split(".").pop() || "bin")
+            .replace(/[^a-z0-9]/gi, "")
+            .toLowerCase();
+          const path = `${currentEventId}/${user.id}/${crypto.randomUUID()}.${ext}`;
+          const uploaded = await db.storage
+            .from("mission-proofs")
+            .upload(path, file, { contentType: file.type, upsert: false });
+          if (uploaded.error) throw uploaded.error;
+          const row = await db
+            .from("mission_media")
+            .insert({
+              event_id: currentEventId,
+              mission_id: missionId,
+              uploaded_by: user.id,
+              media_type: file.type.startsWith("video/") ? "video" : "photo",
+              storage_path: path,
+              file_name: file.name,
+              mime_type: file.type,
+              file_size: file.size,
+            });
+          if (row.error) {
+            await db.storage.from("mission-proofs").remove([path]);
+            throw row.error;
+          }
+          toast("Prova caricata");
+          await refreshRemoteProgress();
+        } catch (err) {
+          console.error(err);
+          toast("Caricamento non riuscito");
+        } finally {
+          input.disabled = false;
+          input.value = "";
+        }
+      }
+      async function editMission(id) {
+        const q = demoQuests.find((x) => x.id === id);
+        if (!q || !currentIsAdmin) return;
+        const title = prompt("Titolo missione", q.title);
+        if (title === null) return;
+        const desc = prompt("Descrizione", q.desc);
+        if (desc === null) return;
+        const points = Number(prompt("Punti (1–50)", String(q.pts)));
+        if (!Number.isInteger(points) || points < 1 || points > 50) {
+          toast("Punteggio non valido");
+          return;
+        }
+        const active = confirm(
+          "Premi OK per lasciare la missione attiva. Annulla per disattivarla.",
+        );
+        const { error } = await db.rpc("update_event_mission", {
+          target_mission: id,
+          new_title: title,
+          new_description: desc,
+          new_points: points,
+          new_status: active ? "active" : "inactive",
+        });
+        if (error) {
+          toast("Modifica non riuscita");
+          return;
+        }
+        q.title = title.trim();
+        q.desc = desc.trim();
+        q.pts = points;
+        q.status = active ? "active" : "inactive";
+        renderQuests();
+        toast("Missione aggiornata");
+      }
+      async function renderGallery() {
+        document.getElementById("questList").classList.add("hidden");
+        const gallery = document.getElementById("gallery");
+        gallery.classList.remove("hidden");
+        if (!currentMedia.length) {
+          gallery.innerHTML =
+            '<div class="panel" style="grid-column:1/-1">Nessuna prova caricata per ora.</div>';
+          return;
+        }
+        gallery.innerHTML =
+          '<div class="panel" style="grid-column:1/-1">Carico i ricordi…</div>';
+        const signed = await Promise.all(
+          currentMedia.map(async (item) => {
+            const result = await db.storage
+              .from("mission-proofs")
+              .createSignedUrl(item.storage_path, 900);
+            return { ...item, url: result.data?.signedUrl };
+          }),
+        );
+        gallery.innerHTML =
+          signed
+            .filter((x) => x.url)
+            .map(
+              (item) =>
+                `<article class="galleryItem">${item.media_type === "video" ? `<video src="${safe(item.url)}" controls preload="metadata"></video>` : `<img src="${safe(item.url)}" alt="Prova della missione" loading="lazy">`}<span>${safe(item.file_name)}</span></article>`,
+            )
+            .join("") ||
+          '<div class="panel" style="grid-column:1/-1">Non riesco a caricare i ricordi.</div>';
+      }
+      function renderQuests() {
+        const list = demoQuests.filter(
+          (q) =>
+            (q.status || "active") === "active" &&
+            (filter === "Tutte" || q.cat === filter),
+        );
+        document.getElementById("questList").innerHTML = list
+          .map((q) => {
+            const key = JSON.stringify(q.id),
+              proofs = proofCounts.get(q.id) || 0,
+              number =
+                typeof q.id === "number"
+                  ? String(q.id).padStart(2, "0")
+                  : String((q.order ?? 0) + 1).padStart(2, "0");
+            return `<article class="quest ${completed.has(q.id) ? "done" : ""}"><div class="questTop"><span>${safe(q.cat.toUpperCase())} · #${number}</span><span>+${q.pts} PT</span></div><h3>${safe(q.title)}</h3><p>${safe(q.desc)}</p><div class="questActions"><button class="btn ${completed.has(q.id) ? "" : "primary"}" onclick='toggleQuest(${key})'>${completed.has(q.id) ? "✓ Completata" : "Convalida prova"}</button><label class="btn" style="margin:0">📷 ${proofs ? `${proofs} prove` : "Prova"}<input class="hidden" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" onchange='uploadProof(${key},this)' ${currentEventId ? "" : "disabled"}></label>${currentIsAdmin && typeof q.id === "string" ? `<button class="btn" onclick='editMission(${key})'>Modifica</button>` : ""}</div></article>`;
+          })
+          .join("");
+        const activeQuests = demoQuests.filter(
+          (q) => (q.status || "active") === "active",
+        );
+        const missionScore = activeQuests
+          .filter((q) => completed.has(q.id))
+          .reduce((s, q) => s + q.pts, 0);
+        const score = missionScore + alcoholCount;
+        document.getElementById("score").textContent = score;
+        document.getElementById("alcoholCount").textContent = alcoholCount;
+        document.getElementById("doneCount").textContent =
+          score >= targetScore ? "🏆 Obiettivo raggiunto" : `${score}/${targetScore} PT per vincere`;
+        document.getElementById("doneCount").classList.toggle("goalReached", score >= targetScore);
+        document.getElementById("scoreBar").style.width =
+          `${Math.min(100, (score / targetScore) * 100)}%`;
+      }
+      const params = new URLSearchParams(location.search);
+      if (params.get("payment") === "success")
+        toast("Pagamento confermato: evento attivato");
+      if (params.get("payment") === "cancelled")
+        toast("Pagamento annullato: la bozza è ancora disponibile");
+      const path = location.pathname;
+      if (path.startsWith("/e/")) {
+        document.getElementById("eventCode").value = path
+          .split("/")
+          .filter(Boolean)
+          .pop()
+          .toUpperCase();
+        showView("join");
+      } else if (path === "/crea") startCreator();
+      renderQuests();
+    </script>
+  </body>
 </html>
