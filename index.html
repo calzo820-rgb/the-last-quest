@@ -513,9 +513,16 @@
         display: flex;
         justify-content: space-between;
         align-items: end;
+        gap: 18px;
       }
       .scoreLine strong {
         font-size: 2.6rem;
+        white-space: nowrap;
+        flex: 0 0 auto;
+      }
+      .scoreLine > span {
+        min-width: 0;
+        text-align: right;
       }
       .filters {
         display: flex;
@@ -736,6 +743,17 @@
         margin: 12px auto;
       }
       @media (max-width: 800px) {
+        .scoreLine {
+          align-items: center;
+          gap: 12px;
+        }
+        .scoreLine strong {
+          font-size: clamp(2rem, 11vw, 2.6rem);
+        }
+        .scoreLine > span {
+          font-size: .95rem;
+          line-height: 1.3;
+        }
         .navActions .ghost {
           display: none;
         }
@@ -911,7 +929,7 @@
             </div>
             <div class="demoHero">
               <div class="eyebrow">Addio al celibato</div>
-              <h2>L'ultima quest di Luca</h2>
+              <h2>The Last Quest</h2>
               <div class="scoreLine">
                 <strong>118 PT</strong><span>Diploma sbloccato</span>
               </div>
@@ -1042,13 +1060,13 @@
                 id="eventName"
                 required
                 maxlength="70"
-                value="L'ultima quest di Luca"
+                value="The Last Quest"
               /><label for="heroName">Nome del protagonista o del gruppo</label
               ><input
                 id="heroName"
                 required
                 maxlength="40"
-                value="Luca"
+                value="Marco"
               /><label for="tone">Modalità di gioco</label
               ><select id="tone">
                 <option>Equilibrato</option>
@@ -1074,7 +1092,7 @@
           <aside class="panel previewPanel">
             <div class="previewCard">
               <span class="tag" id="previewType">🥂 ADDIO AL CELIBATO</span>
-              <h2 id="previewTitle">L'ultima quest di Luca</h2>
+              <h2 id="previewTitle">The Last Quest</h2>
               <p id="previewCopy">
                 Missioni equilibrate per una serata che il gruppo non
                 dimenticherà.
@@ -1175,7 +1193,7 @@
         </header>
         <div class="gameHero">
           <div class="eyebrow" id="gameType">DEMO · ADDIO</div>
-          <h1 id="gameTitle">L'ultima quest di Luca</h1>
+          <h1 id="gameTitle">The Last Quest</h1>
           <div class="scoreLine">
             <strong><span id="score">0</span> PT</strong
             ><span id="doneCount">Obiettivo: 100 PT</span>
@@ -1221,10 +1239,10 @@
               ><button id="shareInviteBtn" class="btn">Condividi invito</button
               ><button id="copyLinkBtn" class="btn">Copia link</button
               ><button id="copyCodeBtn" class="btn">Copia codice</button
-              ><button id="advanceStatusBtn" class="btn">Gestisci stato</button
-              ><button id="finaleBtn" class="btn hidden">Apri il finale</button>
+              ><button id="advanceStatusBtn" class="btn">Gestisci stato</button>
             </div>
           </div>
+          <button id="finaleBtn" class="btn primary full hidden" style="margin-top: 18px">Apri il diploma</button>
           <button
             id="checkoutBtn"
             class="btn primary full hidden"
@@ -1317,7 +1335,7 @@
         SUPABASE_PUBLISHABLE_KEY,
       );
       const views = ["landing", "creator", "join", "account", "game", "finale"];
-      const demoQuests = [
+      const defaultDemoQuests = [
         {
           id: 1,
           cat: "Squadra",
@@ -1354,6 +1372,10 @@
           desc: "Una foto di gruppo memorabile con una posa mai vista prima.",
         },
       ];
+      const demoQuests = defaultDemoQuests.map((quest) => ({ ...quest }));
+      function resetDemoQuests() {
+        demoQuests.splice(0, demoQuests.length, ...defaultDemoQuests.map((quest) => ({ ...quest })));
+      }
       let selectedType = "Addio al celibato",
         filter = "Tutte",
         completed = new Set(),
@@ -1423,8 +1445,14 @@
         }
       }
       function openDemo() {
+        resetDemoQuests();
         currentEventId = null;
         currentIsAdmin = false;
+        currentPurchaseStatus = "demo";
+        targetScore = 100;
+        maxScore = 100;
+        diplomaLevel = "impossible";
+        badgeRequirement = 1;
         if (currentRealtimeChannel) {
           db.removeChannel(currentRealtimeChannel);
           currentRealtimeChannel = null;
@@ -1777,19 +1805,24 @@
             name = document.getElementById("participantName").value.trim();
           document.getElementById("checkoutBtn").classList.add("hidden");
           if (code === "DEMO26") {
+            resetDemoQuests();
             currentEventId = null;
             currentIsAdmin = false;
+            currentPurchaseStatus = "demo";
             if (currentRealtimeChannel) {
               db.removeChannel(currentRealtimeChannel);
               currentRealtimeChannel = null;
             }
             document.getElementById("gameType").textContent = "DEMO · ADDIO";
             document.getElementById("gameTitle").textContent =
-              "L'ultima quest di Luca";
+              "The Last Quest";
             completed = new Set();
             proofCounts = new Map();
             alcoholCount = 0;
             targetScore = 100;
+            maxScore = 100;
+            diplomaLevel = "impossible";
+            badgeRequirement = 1;
             currentChallengeMode = "classic";
             renderQuests();
             showView("game");
@@ -2294,11 +2327,12 @@
           .map((q) => {
             const key = JSON.stringify(q.id),
               proofs = proofCounts.get(q.id) || 0,
+              previewLocked = Boolean(currentEventId) && currentPurchaseStatus !== "paid",
               number =
                 typeof q.id === "number"
                   ? String(q.id).padStart(2, "0")
                   : String((q.order ?? 0) + 1).padStart(2, "0");
-            return `<article class="quest ${completed.has(q.id) ? "done" : ""}"><div class="questTop"><span>${safe(q.cat.toUpperCase())} · #${number}</span><span>+${q.pts} PT</span></div><h3>${safe(q.title)}</h3><p>${safe(q.desc)}</p><div class="questActions"><button class="btn ${completed.has(q.id) ? "" : "primary"}" onclick='toggleQuest(${key})'>${completed.has(q.id) ? "✓ Completata" : "Convalida prova"}</button><label class="btn" style="margin:0">📷 ${proofs ? `${proofs} prove` : "Prova"}<input class="hidden" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" onchange='uploadProof(${key},this)' ${currentEventId ? "" : "disabled"}></label>${currentIsAdmin && typeof q.id === "string" ? `<button class="btn" onclick='editMission(${key})'>Modifica</button>` : ""}</div></article>`;
+            return `<article class="quest ${completed.has(q.id) ? "done" : ""}"><div class="questTop"><span>${safe(q.cat.toUpperCase())} · #${number}</span><span>+${q.pts} PT</span></div><h3>${safe(q.title)}</h3><p>${safe(q.desc)}</p><div class="questActions"><button class="btn ${completed.has(q.id) || previewLocked ? "" : "primary"}" onclick='toggleQuest(${key})' ${previewLocked ? "disabled" : ""}>${previewLocked ? "Disponibile dopo l’acquisto" : completed.has(q.id) ? "✓ Completata" : "Convalida prova"}</button><label class="btn" style="margin:0">📷 ${proofs ? `${proofs} prove` : "Prova"}<input class="hidden" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" onchange='uploadProof(${key},this)' ${currentEventId && currentPurchaseStatus === "paid" ? "" : "disabled"}></label>${currentIsAdmin && typeof q.id === "string" ? `<button class="btn" onclick='editMission(${key})'>Modifica</button>` : ""}</div></article>`;
           })
           .join("");
         const activeQuests = demoQuests.filter(
@@ -2322,6 +2356,7 @@
           `<div class="questBadge ${badge.earned ? "earned" : ""}"><span>${badge.icon}</span>${safe(badge.category)}<br>${badge.count}/${badgeRequirement}</div>`
         ).join("");
         const diplomaUnlocked = rawScore >= targetScore && allBadgesEarned;
+        document.getElementById("finaleBtn").classList.toggle("hidden", !diplomaUnlocked);
         document.getElementById("doneCount").textContent =
           diplomaUnlocked ? `🏆 Diploma sbloccato · record ${rawScore} PT` :
           rawScore < targetScore ? `${rawScore}/${targetScore} PT · servono anche tutti gli stemmi` : "Punti raggiunti · completa gli stemmi";
