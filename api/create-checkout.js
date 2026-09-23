@@ -52,7 +52,7 @@ module.exports = async function handler(req, res) {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2026-02-25.clover' });
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
-      payment_method_types: ['card'],
+      managed_payments: { enabled: true },
       client_reference_id: event.id,
       line_items: [{
         quantity: 1,

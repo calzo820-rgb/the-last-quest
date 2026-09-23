@@ -36,6 +36,8 @@ if(/prompt\("Titolo missione"/.test(html)) throw new Error('Legacy prompt missio
 for(const token of ['/auth/v1/user','event.owner_user_id !== user.id','{CHECKOUT_SESSION_ID}']){
   if(!checkout.includes(token)) throw new Error(`Missing checkout security: ${token}`);
 }
+if(!checkout.includes('managed_payments: { enabled: true }')) throw new Error('Managed Payments is not enabled');
+if(checkout.includes('payment_method_types:')) throw new Error('Managed Payments must control payment methods dynamically');
 for(const token of ['stripe-signature','activate_paid_event','checkout.session.async_payment_succeeded']){
   if(!webhook.includes(token)) throw new Error(`Missing webhook behavior: ${token}`);
 }
