@@ -1080,6 +1080,14 @@
                 <option>Un giorno</option>
                 <option>Un weekend</option>
                 <option>Un viaggio intero</option></select
+              ><label for="initialDifficulty">Difficoltà iniziale</label
+              ><select id="initialDifficulty">
+                <option value="easy">Facile</option>
+                <option value="medium" selected>Medio</option>
+                <option value="hard">Difficile</option>
+                <option value="impossible">Impossibile</option>
+              </select>
+              <p class="micro" style="margin:8px 0 0">L’organizzatore potrà modificarla anche durante il gioco.</p
               ><button
                 class="btn primary full"
                 type="submit"
@@ -1492,7 +1500,7 @@
           updatePreview();
         }),
       );
-      ["eventName", "tone", "duration"].forEach((id) =>
+      ["eventName", "tone", "duration", "initialDifficulty"].forEach((id) =>
         document.getElementById(id).addEventListener("input", updatePreview),
       );
       function updatePreview() {
@@ -1509,14 +1517,11 @@
           document.getElementById("eventName").value || "La tua ultima quest";
         document.getElementById("previewCopy").textContent =
           `Missioni ${document.getElementById("tone").value.toLowerCase()} per un evento che il gruppo non dimenticherà.`;
-        const durationLevel = {
-          "Una serata": "FACILE",
-          "Un giorno": "MEDIO",
-          "Un weekend": "DIFFICILE",
-          "Un viaggio intero": "IMPOSSIBILE",
+        const difficultyLabels = {
+          easy: "FACILE", medium: "MEDIO", hard: "DIFFICILE", impossible: "IMPOSSIBILE",
         };
         document.getElementById("previewGoal").textContent =
-          durationLevel[document.getElementById("duration").value] || "MEDIO";
+          difficultyLabels[document.getElementById("initialDifficulty").value] || "MEDIO";
         document.getElementById("previewMissionCount").textContent =
           "5";
       }
@@ -1553,6 +1558,20 @@
           target_event: event.event_id,
         });
         if (generated.error) throw generated.error;
+        const eventScore = await db
+          .from("events")
+          .select("max_score")
+          .eq("id", event.event_id)
+          .single();
+        if (eventScore.error) throw eventScore.error;
+        const difficultyPercentages = { easy: .35, medium: .50, hard: .70, impossible: 1 };
+        const selectedPercentage = difficultyPercentages[data.difficulty] ?? .50;
+        const scoring = await db.rpc("update_event_scoring", {
+          target_event: event.event_id,
+          new_target_score: Math.ceil((eventScore.data.max_score || 0) * selectedPercentage),
+          new_mission_weight_percent: 100,
+        });
+        if (scoring.error) throw scoring.error;
         return { ...event, mission_count: generated.data };
       }
       async function loadRemoteEvent(eventId) {
@@ -1754,6 +1773,7 @@
             hero: document.getElementById("heroName").value,
             tone: document.getElementById("tone").value,
             duration: document.getElementById("duration").value,
+            difficulty: document.getElementById("initialDifficulty").value,
           };
           localStorage.setItem("tlqDraft", JSON.stringify(data));
           btn.disabled = true;
@@ -1959,10 +1979,10 @@
         advance.disabled = currentEventStatus === "MEMORY" || (currentEventStatus === "DRAFT" && currentPurchaseStatus !== "paid");
         document.getElementById("organizerHint").textContent =
           currentEventStatus === "DRAFT" ? "Configura le missioni e attiva l’evento quando è pronto." :
-          currentEventStatus === "ACTIVE" ? "La squadra può completare missioni e caricare ricordi." :
+          currentEventStatus === "ACTIVE" ? "La squadra può completare missioni e caricare ricordi. Puoi ancora modificare soglia e peso." :
           ["COMPLETED", "MEMORY"].includes(currentEventStatus) ? "L’evento è concluso: consulta il finale e i ricordi." :
           "Condividi il codice o il QR, poi avvia l’evento.";
-        const scoringEditable = currentIsAdmin && ["DRAFT", "READY"].includes(currentEventStatus);
+        const scoringEditable = currentIsAdmin && ["DRAFT", "READY", "ACTIVE"].includes(currentEventStatus);
         const diplomaSlider = document.getElementById("diplomaTarget");
         const weightSlider = document.getElementById("missionWeight");
         diplomaSlider.max = Math.max(0, maxScore);
@@ -1977,7 +1997,7 @@
       }
       let scoringSaveTimer;
       async function saveScoringControls() {
-        if (!currentEventId || !currentIsAdmin || !["DRAFT", "READY"].includes(currentEventStatus)) return;
+        if (!currentEventId || !currentIsAdmin || !["DRAFT", "READY", "ACTIVE"].includes(currentEventStatus)) return;
         const newTarget = Number(document.getElementById("diplomaTarget").value);
         const newWeight = Number(document.getElementById("missionWeight").value);
         const { data, error } = await db.rpc("update_event_scoring", {

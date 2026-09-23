@@ -14,6 +14,9 @@ for(const token of ['id="diplomaTarget"','id="missionWeight"','update_event_scor
 for (const token of ['value="The Last Quest"', 'value="Marco"', 'Disponibile dopo l’acquisto', 'badgeRequirement = 1']) {
   if (!html.includes(token)) throw new Error(`Missing product fix: ${token}`);
 }
+for (const token of ['id="initialDifficulty"', 'difficultyPercentages', '["DRAFT", "READY", "ACTIVE"]']) {
+  if (!html.includes(token)) throw new Error(`Missing difficulty control: ${token}`);
+}
 if(!html.includes('id="previewMissionCount">5<')) throw new Error('Preview must advertise exactly five missions');
 if(/<strong>30<\/strong><span>missioni/.test(html)) throw new Error('Misleading mission count is still present');
 for(const file of ['../api/create-checkout.js','../api/stripe-webhook.js','../.env.example']){
