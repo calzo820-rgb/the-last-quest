@@ -1225,8 +1225,8 @@
             </div>
             <div id="scoringControls" class="scoringControls">
               <div class="scoreControl">
-                <label for="diplomaTarget"><span>Difficoltà del diploma</span><output id="diplomaTargetValue">Medio</output></label>
-                <input id="diplomaTarget" type="range" min="0" max="3" step="1" value="1">
+                <label for="diplomaTarget"><span>Soglia del diploma</span><output id="diplomaTargetValue">100 PT</output></label>
+                <input id="diplomaTarget" type="range" min="0" max="100" step="1" value="100">
               </div>
               <div class="scoreControl">
                 <label for="missionWeight"><span>Peso delle missioni</span><output id="missionWeightValue">100%</output></label>
@@ -1609,7 +1609,7 @@
         currentIsAdmin = participantResult.data?.role === "admin";
         currentMedia = mediaResult.data || [];
         alcoholCount = counterResult.data?.alcohol_count || 0;
-        targetScore = eventResult.data.target_score || 100;
+        targetScore = eventResult.data.target_score ?? 100;
         missionWeightPercent = eventResult.data.mission_weight_percent || 100;
         maxScore = eventResult.data.max_score || 0;
         diplomaLevel = eventResult.data.diploma_level || "medium";
@@ -1942,7 +1942,6 @@
       });
       function updateOrganizerUi() {
         const levelLabels = { easy: "Facile", medium: "Medio", hard: "Difficile", impossible: "Impossibile" };
-        const levelIndexes = { easy: 0, medium: 1, hard: 2, impossible: 3 };
         const statusLabels = {
           DRAFT: "Bozza", READY: "Pronto", ACTIVE: "In corso",
           COMPLETED: "Concluso", MEMORY: "Ricordi",
@@ -1966,7 +1965,8 @@
         const scoringEditable = currentIsAdmin && ["DRAFT", "READY"].includes(currentEventStatus);
         const diplomaSlider = document.getElementById("diplomaTarget");
         const weightSlider = document.getElementById("missionWeight");
-        diplomaSlider.value = levelIndexes[diplomaLevel] ?? 1;
+        diplomaSlider.max = Math.max(0, maxScore);
+        diplomaSlider.value = Math.min(targetScore, maxScore);
         weightSlider.value = missionWeightPercent;
         diplomaSlider.disabled = !scoringEditable;
         weightSlider.disabled = !scoringEditable;
@@ -1978,37 +1978,46 @@
       let scoringSaveTimer;
       async function saveScoringControls() {
         if (!currentEventId || !currentIsAdmin || !["DRAFT", "READY"].includes(currentEventStatus)) return;
-        const levels = ["easy", "medium", "hard", "impossible"];
-        const newLevel = levels[Number(document.getElementById("diplomaTarget").value)] || "medium";
+        const newTarget = Number(document.getElementById("diplomaTarget").value);
         const newWeight = Number(document.getElementById("missionWeight").value);
         const { data, error } = await db.rpc("update_event_scoring", {
           target_event: currentEventId,
-          new_diploma_level: newLevel,
+          new_target_score: newTarget,
           new_mission_weight_percent: newWeight,
         });
         if (error) {
           toast("Punteggi non aggiornati");
           return;
         }
-        targetScore = data?.[0]?.target_score || targetScore;
+        targetScore = data?.[0]?.target_score ?? targetScore;
         missionWeightPercent = data?.[0]?.mission_weight_percent || newWeight;
         maxScore = data?.[0]?.max_score || maxScore;
-        diplomaLevel = data?.[0]?.diploma_level || newLevel;
+        diplomaLevel = data?.[0]?.diploma_level || diplomaLevel;
         badgeRequirement = data?.[0]?.badge_requirement || badgeRequirement;
         await loadRemoteEvent(currentEventId);
         toast("Punteggi aggiornati");
       }
+      function scoringDifficulty(target, maximum) {
+        const ratio = maximum > 0 ? target / maximum : 0;
+        if (ratio <= .35) return "Facile";
+        if (ratio <= .50) return "Medio";
+        if (ratio < 1) return "Difficile";
+        return "Impossibile";
+      }
       function queueScoringSave() {
-        const levels = ["Facile", "Medio", "Difficile", "Impossibile"];
-        const targetIndex = Number(document.getElementById("diplomaTarget").value);
+        const diplomaSlider = document.getElementById("diplomaTarget");
+        let target = Number(diplomaSlider.value);
         const weight = Number(document.getElementById("missionWeight").value);
-        const percentages = [35,50,70,100];
-        const estimatedMax = Math.max(50,Math.round(maxScore * weight / Math.max(1,missionWeightPercent)));
-        const estimatedTarget = Math.ceil(estimatedMax * percentages[targetIndex] / 100);
-        document.getElementById("diplomaTargetValue").textContent = `${levels[targetIndex]} · ${estimatedTarget} PT`;
+        const estimatedMax = Math.max(0,Math.round(maxScore * weight / Math.max(1,missionWeightPercent)));
+        diplomaSlider.max = estimatedMax;
+        if (target > estimatedMax) {
+          target = estimatedMax;
+          diplomaSlider.value = target;
+        }
+        document.getElementById("diplomaTargetValue").textContent = `${scoringDifficulty(target, estimatedMax)} · ${target} PT`;
         document.getElementById("missionWeightValue").textContent = `${weight}%`;
         document.getElementById("missionPointsAvailable").textContent =
-          `50 missioni · massimo circa ${estimatedMax} PT · il totale definitivo viene aggiornato automaticamente`;
+          `50 missioni · massimo circa ${estimatedMax} PT · soglia diploma ${target} PT`;
         clearTimeout(scoringSaveTimer);
         scoringSaveTimer = setTimeout(saveScoringControls, 450);
       }
