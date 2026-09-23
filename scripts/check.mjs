@@ -7,7 +7,7 @@ for(const token of ['The Last Quest','id="creator"','id="join"','id="game"','sta
 for(const token of ['bachelor_party','bachelorette_party','previewMissionCount']){
   if(!html.includes(token)) throw new Error(`Missing event catalog behavior: ${token}`);
 }
-for(const token of ['id="diplomaTarget"','id="missionWeight"','update_event_scoring','badgeRow']){
+for(const token of ['id="diplomaTarget"','id="missionWeight"','update_event_scoring','badgeRow','new_target_score','scoringDifficulty']){
   if(!html.includes(token)) throw new Error(`Missing scoring control: ${token}`);
 }
 
