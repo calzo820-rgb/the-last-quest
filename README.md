@@ -42,6 +42,9 @@ Impostare le variabili elencate in `.env.example`. Il webhook Stripe deve puntar
 `/api/stripe-webhook` e ascoltare `checkout.session.completed` e
 `checkout.session.async_payment_succeeded`.
 
+Dopo aver aggiunto o modificato una variabile Stripe su Vercel, eseguire un nuovo
+deployment di produzione affinché il valore sia disponibile alle funzioni serverless.
+
 Dopo Stripe Checkout il browser riapre automaticamente la bozza e attende che
 il webhook imposti `purchase_status = paid`. Se il webhook è in ritardo, la
 bozza resta recuperabile da **I miei eventi** e può essere riaperta senza perdere dati.
