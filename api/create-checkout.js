@@ -61,7 +61,8 @@ module.exports = async function handler(req, res) {
           unit_amount: 1999,
           product_data: {
             name: 'The Last Quest — Evento completo',
-            description: event.name
+            description: event.name,
+            tax_code: 'txcd_10103000'
           }
         }
       }],

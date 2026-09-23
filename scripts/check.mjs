@@ -38,6 +38,7 @@ for(const token of ['/auth/v1/user','event.owner_user_id !== user.id','{CHECKOUT
 }
 if(!checkout.includes('managed_payments: { enabled: true }')) throw new Error('Managed Payments is not enabled');
 if(checkout.includes('payment_method_types:')) throw new Error('Managed Payments must control payment methods dynamically');
+if(!checkout.includes("tax_code: 'txcd_10103000'")) throw new Error('Managed Payments product tax code is missing');
 for(const token of ['stripe-signature','activate_paid_event','checkout.session.async_payment_succeeded']){
   if(!webhook.includes(token)) throw new Error(`Missing webhook behavior: ${token}`);
 }
