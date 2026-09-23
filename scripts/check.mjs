@@ -7,6 +7,10 @@ for(const token of ['The Last Quest','id="creator"','id="join"','id="game"','sta
 for(const token of ['bachelor_party','bachelorette_party','previewMissionCount']){
   if(!html.includes(token)) throw new Error(`Missing event catalog behavior: ${token}`);
 }
+for(const token of ['id="diplomaTarget"','id="missionWeight"','update_event_scoring','badgeRow']){
+  if(!html.includes(token)) throw new Error(`Missing scoring control: ${token}`);
+}
+if(!html.includes('id="previewMissionCount">5<')) throw new Error('Preview must advertise exactly five missions');
 if(/<strong>30<\/strong><span>missioni/.test(html)) throw new Error('Misleading mission count is still present');
 for(const file of ['../api/create-checkout.js','../api/stripe-webhook.js','../.env.example']){
   if(!fs.existsSync(new URL(file,import.meta.url))) throw new Error(`Missing ${file}`);
@@ -49,5 +53,13 @@ if(!fs.existsSync(new URL('../docs/RELEASE_CHECKLIST.md',import.meta.url))) thro
 if(!JSON.stringify(vercel).includes('X-Frame-Options')) throw new Error('Security headers are incomplete');
 if(/sk_(?:test|live)_|whsec_|service_role\s*=\s*[A-Za-z0-9_-]{20,}/.test([html,checkout,webhook].join('\n'))){
   throw new Error('A server secret appears to be committed');
+}
+const scoringMigration=fs.readFileSync(new URL('../supabase/migrations/20260923080142_add_preview_and_scoring_controls.sql',import.meta.url),'utf8');
+for(const token of ['preview_only','mission_weight_percent','update_event_scoring','private.insert_event_missions(target_event,false)']){
+  if(!scoringMigration.includes(token)) throw new Error(`Missing scoring migration behavior: ${token}`);
+}
+const catalogMigration=fs.readFileSync(new URL('../supabase/migrations/20260923083111_add_fifty_mission_catalog_and_badges.sql',import.meta.url),'utf8');
+for(const token of ['mission_categories','scope','diploma_level','badge_requirement','full_event_max_score','category_rank<=5']){
+  if(!catalogMigration.includes(token)) throw new Error(`Missing fifty-mission catalog behavior: ${token}`);
 }
 console.log('The Last Quest checks passed');
